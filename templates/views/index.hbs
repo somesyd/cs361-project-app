@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+
+
+    <head>
+        <title>reverie</title>
+        <link rel="stylesheet" href="/css/styles.css">
+       
+    </head>
+
+    <body>
+        <div class="main-content">
+            {{>header}}
+            
+            <div class="main-container">
+                 <div class="center-box">
+                    <div class="choose-header"><h1>choose one</h1></div>
+                    <div class="arrow-box">
+                        <div class="arrow" id="left-arrow">{{>leftarrow}}</div>
+                        <div class="arrow" id="right-arrow">{{>rightarrow}}</div>
+                    </div>
+                    <div class="choice-box-container">
+                        <div class="choice-box">
+                            <div class="choice-header-box">
+                                <div class="choice-header"><h2>demo</h2></div>
+                            </div>
+                            <div class="choice-instruction-box">
+                                <div class="choice-instruction">explore a randomly selected dream</div>
+                            </div> 
+                        </div>
+                        <div class="choice-box">
+                            <div class="choice-header-box">
+                                <div class="choice-header"><h2>explore</h2></div>
+                            </div>
+                            <div class="choice-instruction-box">
+                                <div class="choice-instruction">use reverie to explore your own written dream</div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+        
+        {{>footer}}
+
+         <script src="/js/app.js"></script>
+    </body>
+
+</html>
