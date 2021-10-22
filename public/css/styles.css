@@ -5,10 +5,8 @@
 .page-header {
     font-family: 'Georgia', sans-serif;
     font-size: large;
-    /* font-weight: lighter; */
-    
     text-align: center;
-    color: slategrey;
+
 }
 
 .center-box {
@@ -67,6 +65,43 @@
     overflow-wrap: normal;
 }
 
+#dream-form {
+    display: grid;
+    grid-template-rows: 4fr 1fr;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+#dream-textarea {
+    text-align: left;
+    padding: 10px;
+    font-size: large;
+}
+
+#dream-form  button {
+    max-width: 200px;
+    place-self: end;
+    margin: 1em;
+    padding: 4px 30px;
+    font-size: large;
+    border-radius: 8px;
+    border: none;
+    background-color: darkblue;
+    color: white;
+
+}
+
+.back {
+    text-decoration: none;
+    color: slategrey;
+    font-size: large;
+    font-family: Helvetica, Arial, sans-serif;
+    margin-left: 2em;
+}
+
+.back:hover {
+    color:darkblue;
+}
 
 
 

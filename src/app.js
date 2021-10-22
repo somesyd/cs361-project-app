@@ -22,6 +22,10 @@ app.get('', (req, res) => {
     res.render('index')
 })
 
+app.get('/explore', (req, res) => {
+    res.render('explore')
+})
+
 // app.get('', (req, res) => {
 //     res.render('index', {
 //         title: 'Weather',
