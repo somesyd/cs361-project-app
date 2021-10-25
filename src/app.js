@@ -2,6 +2,7 @@ const path = require('path')  // Core node module
 const express = require('express') 
 const dotenv = require('dotenv').config()
 const hbs = require('hbs')
+const data = require('./utils/data')
 
 const app = express()   // express is a function, so we have to start it up
 const port = process.env.PORT || 31474 
@@ -22,8 +23,18 @@ app.get('', (req, res) => {
     res.render('index')
 })
 
-app.get('/explore', (req, res) => {
-    res.render('explore')
+app.get('/form', (req, res) => {
+    res.render('form')
+})
+
+app.get('/content', (req, res) => {
+    const context = {
+        dreamtext: data.dreamText.dream,
+        settingtext: data.settingText.textList,
+        settingphotos: data.settingPhotos.files,
+        characterego: data.dreamEgo.list
+    }
+    res.render('content', context)
 })
 
 // app.get('', (req, res) => {

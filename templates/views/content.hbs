@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+
+    <head>
+        <title>reverie</title>
+        <link rel="stylesheet" href="/css/styles.css">
+       
+    </head>
+
+    <body>
+        <div class="main-content">
+            {{>header}}
+            <div id="dream-text">
+                <div class="content-header">the dream</div>
+                <div class="content-text">"{{dreamtext}}"</div>
+            </div>
+            <div id="dream-setting">
+                <div class="content-header">the setting</div>
+                <div class="phrase-block">
+                    {{#each settingtext}}
+                        <div class="phrase">{{this}}</div>
+                    {{/each}}
+                </div>
+                <div class="photo-block">
+                    {{#each settingphotos}}
+                        <img class="image" src="/img/{{this}}">
+                    {{/each}}  
+                </div>
+            </div>
+            <div id="dream-characters">
+                <div class="content-header">the characters</div>
+                <div class="sub-block">
+                    <div class="content-subheader">dream ego</div>
+                    <ul class="bullets">
+                        {{#each characterego}}
+                            <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            
+            
+           <a href='/' class="back">< Back to Home</a>
+        </div>
+        
+        {{>footer}}
+
+         <script src="/js/app.js"></script>
+    </body>
+
+</html>
