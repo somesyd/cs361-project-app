@@ -32,7 +32,11 @@ app.get('/content', (req, res) => {
         dreamtext: data.dreamText.dream,
         settingtext: data.settingText.textList,
         settingphotos: data.settingPhotos.files,
-        characterego: data.dreamEgo.list
+        characters: data.characters,
+        suggest: data.suggest,
+        symbol: data.symbols,
+        shadow: data.shadow,
+        motif: data.motifs
     }
     res.render('content', context)
 })

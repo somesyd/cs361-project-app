@@ -14,7 +14,7 @@
             {{>header}}
             <div id="dream-text">
                 <div class="content-header">the dream</div>
-                <div class="content-text">"{{dreamtext}}"</div>
+                <div class="sub-block">{{dreamtext}}</div>
             </div>
             <div id="dream-setting">
                 <div class="content-header">the setting</div>
@@ -34,15 +34,91 @@
                 <div class="sub-block">
                     <div class="content-subheader">dream ego</div>
                     <ul class="bullets">
-                        {{#each characterego}}
+                        {{#each characters.dreamego}}
                             <li>{{this}}</li>
-                        {{/each}}
+                        {{/each}}       
                     </ul>
+                    <img class="meter" src="/img/{{characters.agency}}">
                 </div>
+                <div class="sub-block">
+                    <div class="content-subheader">dream figures</div>
+                    <div class="mini-block">
+                        <div class="mini-block-header">anima/animus figures:</div>
+                        <ul class="mini-phrase-block">
+                            {{#each characters.anim}}
+                            <li class="phrase comma">{{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="mini-block">
+                        <div class="mini-block-header">other figures:</div>
+                        <ul class="mini-phrase-block">
+                            {{#each characters.figures}}
+                            <li class="phrase comma">{{this}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div class="suggestions">
+                    <b class="suggestion-title">{{suggest.characters.title}}</b>
+                    <span class="suggestion-text">{{suggest.characters.text}}</span>
+                </div>
+            </div>
+            <div id="dream-images">
+                <div class="content-header">dream images</div>
+                <div class="sub-block">
+                    <div class="content-subheader">prominent words and phrases</div>
+                    <div class="symbol-gallery">
+                        {{#each symbol.list}}
+                            <div class="symbol-box">
+                                <div class="symbol-image-box">
+                                    <img class="symbol-image" src="/img/{{this.image}}">
+                                </div>
+                                <div class="symbol-header">{{this.name}}</div>
+                                <div class="symbol-text">{{this.text}}</div>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <div class="suggestions">
+                        <b class="suggestion-title">{{suggest.symbols.title}}</b>
+                    <span class="suggestion-text">{{suggest.symbols.text}}</span>
+                    </div>
+                </div>
+            </div>
+            <div id="dream-shadow">
+                <div class="content-header">shadow</div>
+                <div class="sub-block">
+                     <ul class="mini-phrase-block">
+                            {{#each shadow.words}}
+                            <li class="phrase comma">"{{this}}"</li>
+                            {{/each}}
+                     </ul>
+                     <img class="meter" src="/img/{{shadow.meter}}">
+                     <div class="suggestions">
+                        <b class="suggestion-title">{{suggest.shadow.title}}</b>
+                    <span class="suggestion-text">{{suggest.shadow.text}}</span>
+                </div>
+                </div>
+            </div>
+            <div id="dream-motif">
+                <div class="content-header">dream motifs</div>
+                <div class="sub-block">
+                    <img class="pie-chart" src="/img/{{motif.graph}}">
+                    <div class="suggestions">
+                        <b class="suggestion-title">{{suggest.motifs.title}}</b>
+                        <span class="suggestion-text">{{suggest.motifs.text}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <a href='/' class="back">< Back to Home</a>
+                <button>Save Analysis</button>
+                <button>Analyze a New Dream</button>
             </div>
             
             
-           <a href='/' class="back">< Back to Home</a>
+           
         </div>
         
         {{>footer}}

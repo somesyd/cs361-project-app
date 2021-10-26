@@ -1,6 +1,5 @@
-<rightarrow>
-    <svg xmlns="http://www.w3.org/2000/svg" width="154.149" height="154.149" viewBox="0 0 154.149 154.149">
-    <g id="arrow" transform="translate(127.986 154.149) rotate(-135)">
+<svg xmlns="http://www.w3.org/2000/svg" width="154.149" height="154.149" viewBox="0 0 154.149 154.149">
+    <g id="arrow" transform="translate(0 127.986) rotate(-45)">
         <g id="Rectangle_5" data-name="Rectangle 5" transform="translate(44 12.5)" fill="#9d9c9f" stroke="#9d9c9f" stroke-width="1">
             <rect width="137" height="12" stroke="none"/>
             <rect x="0.5" y="0.5" width="136" height="11" fill="none"/>
@@ -10,5 +9,4 @@
             <path d="M 18.5 2.580051422119141 L 1.5052490234375 43 L 35.4947509765625 43 L 18.5 2.580051422119141 M 18.5 0 L 37 44 L 0 44 L 18.5 0 Z" stroke="none" fill="#9d9c9f"/>
         </g>
     </g>
-    </svg>
-</rightarrow>
+</svg>

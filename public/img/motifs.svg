@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1021" height="500" viewBox="0 0 1021 500">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="Ellipse_2" data-name="Ellipse 2" cx="250" cy="250" r="250" transform="translate(643 271)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect width="254" height="343" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_1" data-name="Mask Group 1" transform="translate(-643 -271)" clip-path="url(#clip-path)">
+    <path id="pie_1" data-name="pie 1" d="M973,622V312.859L1232.83,457.6l36.251,273.71L1107.711,886.7Z" transform="translate(-80 -101)" fill="#1a1f2e" stroke="#1a1f2e" stroke-width="1"/>
+    <path id="Path_3" data-name="Path 3" d="M973.314,621.983l173.706,269.7-402.9,7.094-26.665-69.616Z" transform="translate(-80 -101)" fill="#4a4b55" stroke="#4a4b55" stroke-width="1"/>
+    <path id="Path_4" data-name="Path 4" d="M974.2,619.258l-346.261,6.411L721.858,897.1Z" transform="translate(-80 -101)" fill="#6f737e" stroke="#6f737e" stroke-width="1"/>
+    <path id="Path_5" data-name="Path 5" d="M971.714,619.67c-.025-.046-382.9-149.649-382.9-149.649l30.16,222.81S971.739,619.716,971.714,619.67Z" transform="translate(-80 -101)" fill="#a4a7b1" stroke="#a4a7b1" stroke-width="1"/>
+    <path id="Path_6" data-name="Path 6" d="M971.462,621.755,804.709,330.3,684.7,549.026Z" transform="translate(-80 -101)" fill="#d0d2e2" stroke="#d0d2e2" stroke-width="1"/>
+    <path id="Path_7" data-name="Path 7" d="M973.326,621.38l35.464-324.395-245.26,54.192Z" transform="translate(-80 -101)" fill="#dcdee5" stroke="#dcdee5" stroke-width="1"/>
+  </g>
+  <g id="Repeat_Grid_1" data-name="Repeat Grid 1" transform="translate(767 64)" clip-path="url(#clip-path-2)">
+    <g transform="translate(-1013 -298)">
+      <g id="Component_1_9" data-name="Component 1 – 9" transform="translate(1013 298)">
+        <g id="Rectangle_14" data-name="Rectangle 14" fill="#1a1f2e" stroke="#707070" stroke-width="1">
+          <rect width="40" height="40" stroke="none"/>
+          <rect x="0.5" y="0.5" width="39" height="39" fill="none"/>
+        </g>
+        <text id="shadow" transform="translate(57 31)" fill="#707070" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">shadow</tspan></text>
+      </g>
+    </g>
+    <g transform="translate(-1013 -238)">
+      <g id="Component_1_9-2" data-name="Component 1 – 9" transform="translate(1013 298)">
+        <g id="Path_8" data-name="Path 8" fill="#4a4b55">
+          <path d="M 39.5 39.5 L 0.5 39.5 L 0.5 0.5 L 39.5 0.5 L 39.5 39.5 Z" stroke="none"/>
+          <path d="M 1 1 L 1 39 L 39 39 L 39 1 L 1 1 M 0 0 L 40 0 L 40 40 L 0 40 L 0 0 Z" stroke="none" fill="#707070"/>
+        </g>
+        <text id="ego" transform="translate(57 31)" fill="#707070" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">ego</tspan></text>
+      </g>
+    </g>
+    <g transform="translate(-1013 -178)">
+      <g id="Component_1_9-3" data-name="Component 1 – 9" transform="translate(1013 298)">
+        <g id="Path_9" data-name="Path 9" fill="#6f737e">
+          <path d="M 39.5 39.5 L 0.5 39.5 L 0.5 0.5 L 39.5 0.5 L 39.5 39.5 Z" stroke="none"/>
+          <path d="M 1 1 L 1 39 L 39 39 L 39 1 L 1 1 M 0 0 L 40 0 L 40 40 L 0 40 L 0 0 Z" stroke="none" fill="#707070"/>
+        </g>
+        <text id="anima_animus" data-name="anima/animus" transform="translate(57 31)" fill="#707070" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">anima/animus</tspan></text>
+      </g>
+    </g>
+    <g transform="translate(-1013 -118)">
+      <g id="Component_1_9-4" data-name="Component 1 – 9" transform="translate(1013 298)">
+        <g id="Path_10" data-name="Path 10" fill="#a4a7b1">
+          <path d="M 39.5 39.5 L 0.5 39.5 L 0.5 0.5 L 39.5 0.5 L 39.5 39.5 Z" stroke="none"/>
+          <path d="M 1 1 L 1 39 L 39 39 L 39 1 L 1 1 M 0 0 L 40 0 L 40 40 L 0 40 L 0 0 Z" stroke="none" fill="#707070"/>
+        </g>
+        <text id="animals" transform="translate(57 31)" fill="#707070" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">animals</tspan></text>
+      </g>
+    </g>
+    <g transform="translate(-1013 -58)">
+      <g id="Component_1_9-5" data-name="Component 1 – 9" transform="translate(1013 298)">
+        <g id="Rectangle_14-2" data-name="Rectangle 14" fill="#d0d2e2" stroke="#707070" stroke-width="1">
+          <rect width="40" height="40" stroke="none"/>
+          <rect x="0.5" y="0.5" width="39" height="39" fill="none"/>
+        </g>
+        <text id="mythic" transform="translate(57 31)" fill="#707070" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">mythic</tspan></text>
+      </g>
+    </g>
+    <g transform="translate(-1013 2)">
+      <g id="Component_1_9-6" data-name="Component 1 – 9" transform="translate(1013 298)">
+        <g id="Rectangle_14-3" data-name="Rectangle 14" fill="#dcdee5" stroke="#707070" stroke-width="1">
+          <rect width="40" height="40" stroke="none"/>
+          <rect x="0.5" y="0.5" width="39" height="39" fill="none"/>
+        </g>
+        <text id="other" transform="translate(57 31)" fill="#707070" font-size="28" font-family="HelveticaNeue, Helvetica Neue"><tspan x="0" y="0">other</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
+
