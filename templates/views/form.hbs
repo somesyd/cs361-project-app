@@ -16,9 +16,10 @@
                  <a href='/' class="back">< Back to Home</a>
             
                 <div class="dream-form-box">
-                    <form id="dream-form">
+                    <form id="dream-form" action="/processing" method="post">
                         <textarea id="dream-textarea" name="dream-text" placeholder="Share the details of the dream here, as if it was a story ..."></textarea>
-                        <button>analyze</button>
+                        <button type="submit" id="dream-submit" class="button">analyze</button>
+                      
                     </form>
                 </div>
             </div>
@@ -29,7 +30,7 @@
         
         
 
-         <script src="/js/app.js"></script>
+         <script src="/js/form.js"></script>
     </body>
 
 </html>

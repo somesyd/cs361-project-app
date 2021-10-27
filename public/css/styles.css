@@ -62,6 +62,13 @@
     border: 2px solid grey;
 }
 
+.choice-box:hover,
+.choice-box:focus {
+    opacity: 0.6;
+    text-decoration: none;
+    cursor:pointer;
+}
+
 .choice-header-box {
     background-color: lightblue;
     width: 100%;
@@ -93,16 +100,27 @@
     font-size: large;
 }
 
-#dream-form  button {
-    max-width: 200px;
-    place-self: end;
-    margin: 1em;
+.button {
     padding: 4px 30px;
     font-size: large;
     border-radius: 8px;
     border: none;
     background-color: darkblue;
     color: white;
+}
+
+#dream-form  .button {
+    max-width: 200px;
+    place-self: end;
+    margin: 1em;
+   
+}
+
+
+.button:hover,
+.button:focus {
+    opacity: 0.6;
+    cursor:pointer;
 }
 
 .back {
@@ -133,10 +151,13 @@
 }
 
 .phrase-block {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    padding: 1em 1em 1em 3em;
+    display: flex;
+    margin: 2em;
+    color: #707070;
+    list-style: none;
     font-style: italic;
+    font-size: large;
+    /* padding: 5px; */
 }
 
 .photo-block {
@@ -202,11 +223,11 @@
 }
 
 .phrase.comma {
-    display: inline-block;
+    display: inline-block; 
 }
 
 .phrase.comma ~ .phrase.comma::before {
-    content: ', ';
+    content: ', \00a0';
 }
 
 .suggestions {
@@ -240,6 +261,12 @@
     text-align: center;
     max-height: 400px;
     overflow-y: hidden;
+}
+
+.symbol-box:hover,
+.symbol-box:focus {
+    opacity: 0.6;
+    cursor:pointer;
 }
 
 .symbol-image-box {
@@ -289,10 +316,16 @@
     line-height: 12px;
     margin-bottom: 5px;
     margin-top: auto;
+}
 
+.button-container {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   justify-items: start;
 }
 
 /* modal styling */
+/* help from:  https://www.w3schools.com/howto/howto_css_modals.asp*/
 .modal {
     display: none;
     position: fixed;
@@ -312,7 +345,6 @@
     padding: 1em;
     border: 1px solid #888;
     width: 35%;
-  
 }
 
 .modal .symbol-image-box {
@@ -323,20 +355,49 @@
 
 .symbol-box.modal-content {
     overflow: auto;
+    opacity: 100%;
 }
 
-.close {
+.close-modal {
     color: #aaaaaa;
     float: right;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.close-modal:hover,
+.close-modal:focus {
     color: black;
     text-decoration: none;
     cursor:pointer;
+}
+
+/* tooltip */
+/* help from:  https://blog.logrocket.com/creating-beautiful-tooltips-with-only-css/*/
+
+.tooltip {
+    position: relative;
+    /* display: inline-block; */
+    border-bottom: 1px dotted black;
+}
+
+.tooltip:before {
+    content: attr(data-text);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: rgb(43, 51, 58);
+    text-align: center;
+    display: none;
+}
+
+.tooltip:hover:before {
+    display: block;
 }
 
 

@@ -30,16 +30,29 @@ app.get('/form', (req, res) => {
 app.get('/content', (req, res) => {
     const context = {
         dreamtext: data.dreamText.dream,
-        settingtext: data.settingText.textList,
-        settingphotos: data.settingPhotos.files,
+        setting: data.setting,
         characters: data.characters,
         suggest: data.suggest,
         symbol: data.symbols,
         shadow: data.shadow,
-        motif: data.motifs,
-        eye: data.symbols.list[3]
+        motif: data.motifs
     }
     res.render('content', context)
+})
+
+app.post('/processing', (req, res) => {
+    
+    // run some dream analysis
+    const fakeData = {
+        dreamtext: data.dreamText.dream,
+        setting: data.setting,
+        characters: data.characters,
+        suggest: data.suggest,
+        symbol: data.symbols,
+        shadow: data.shadow,
+        motif: data.motifs
+    }
+    res.render('content', fakeData)
 })
 
 // app.get('', (req, res) => {

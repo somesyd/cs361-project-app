@@ -18,13 +18,13 @@
             </div>
             <div id="dream-setting">
                 <div class="content-header">the setting</div>
-                <div class="phrase-block">
-                    {{#each settingtext}}
-                        <div class="phrase">{{this}}</div>
+                <ul class="phrase-block">
+                    {{#each setting.text}}
+                    <li class="phrase comma">{{this}}</li>
                     {{/each}}
-                </div>
+                </ul>
                 <div class="photo-block">
-                    {{#each settingphotos}}
+                    {{#each setting.photos}}
                         <img class="image" src="/img/{{this}}">
                     {{/each}}  
                 </div>
@@ -71,12 +71,23 @@
                     <div class="content-subheader">prominent words and phrases</div>
                     <div class="symbol-gallery">
                         {{#each symbol.list}}
-                            <div class="symbol-box" id="symbol-{{this.id}}">
+                            <div class="symbol-box tooltip" onClick="displayModal({{this.id}})" data-id={{this.id}} data-text="Click to read more.">
                                 <div class="symbol-image-box">
                                     <img class="symbol-image" src="/img/{{this.image}}">
                                 </div>
                                 <div class="symbol-header">{{this.name}}</div>
                                 <div class="symbol-text">{{this.text}}</div>
+                            </div>
+                            {{!-- modal box starts hidden --}}
+                            <div id="symbol-modal-{{this.id}}" class="modal" data-id={{this.id}}>
+                                <div class="symbol-box modal-content">
+                                    <span class="close-modal" onClick="closeModal({{this.id}})">&times;</span>
+                                    <div class="symbol-image-box">
+                                        <img class="symbol-image" src="/img/{{this.image}}">
+                                    </div>
+                                    <div class="symbol-header">{{this.name}}</div>
+                                    <div class="symbol-text">{{this.text}}</div>
+                                </div>
                             </div>
                         {{/each}}
                     </div>
@@ -113,28 +124,19 @@
             </div>
             <div class="button-container">
                 <a href='/' class="back">< Back to Home</a>
-                <button>Save Analysis</button>
-                <button>Analyze a New Dream</button>
+                <button class="button" id="save-content">Save Analysis</button>
+                <button class="button" id="new-analysis-button">Analyze a New Dream</button>
             </div>
             
             
-           <div id="symbol-modal" class="modal">
-               
-                <div class="symbol-box modal-content">
-                    <span class="close">&times;</span>
-                    <div class="symbol-image-box">
-                        <img class="symbol-image" src="/img/{{eye.image}}">
-                    </div>
-                    <div class="symbol-header">{{eye.name}}</div>
-                    <div class="symbol-text">{{eye.text}}</div>
-                </div>
-            </div>
+           
              {{>footer}}
         </div>
         
        
 
-         <script src="/js/app.js"></script>
+         {{!-- <script src="/js/app.js"></script> --}}
+         <script src="/js/modal.js"></script>
     </body>
 
 </html>

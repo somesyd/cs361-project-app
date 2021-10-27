@@ -30,14 +30,9 @@ const motifs = {
     graph: 'motifs.svg'
 }
 
-
-
-const settingText = {
-    textList: ["in a room", "a kitchen", "the television show \"Friends\"", "middle of the kitchen"]
-}
-
-const settingPhotos = {
-    files: [
+const setting = {
+    text: [["in a room", "a kitchen", "the television show \"Friends\"", "middle of the kitchen"]],
+    photos: [
         'dream-img-1.jpeg', 
         'dream-img-2.jpeg', 
         'dream-img-3.jpeg', 
@@ -46,6 +41,7 @@ const settingPhotos = {
         'dream-img-6.jpeg'
     ]
 }
+
 
 const suggest = {
     characters: {
@@ -97,8 +93,7 @@ const symbols = {
 
 module.exports = {
     dreamText: dreamText,
-    settingText: settingText,
-    settingPhotos: settingPhotos,
+    setting: setting,
     characters: characters,
     suggest: suggest,
     symbols: symbols,

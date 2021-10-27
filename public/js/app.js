@@ -1,33 +1,12 @@
-var modal = null
-var closeSpan = document.getElementsByClassName('close')[0]
+var demoBox = document.getElementById('demo-choice')
+var exploreBox = document.getElementById('explore-choice')
 
-closeSpan.onclick = function () {
-    modal.style.display = 'none'
+
+demoBox.onclick = () => {
+    location.href='/content'
 }
 
-function openModal(id) {
-    // modal = document.getElementById(id)
-    //placeholder:
-    modal = document.getElementById('symbol-modal')
-    modal.style.display = 'block'
+exploreBox.onclick = () => {
+    location.href='/form'
 }
 
-window.onclick = (event) => {
-    if (event.target == modal) {
-        modal.style.display = 'none'
-    }
-}
-
-function onLoad() {
-    document.addEventListener('DOMContentLoaded', function () {
-    
-        document.querySelectorAll('.symbol-box').forEach( function (el) {
-            el.addEventListener('click', function (event) {
-                openModal(event.target.id)
-                // alert(event.target.id)
-    
-            })
-        })
-    })
-}
-onLoad()
