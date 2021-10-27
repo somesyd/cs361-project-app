@@ -36,7 +36,8 @@ app.get('/content', (req, res) => {
         suggest: data.suggest,
         symbol: data.symbols,
         shadow: data.shadow,
-        motif: data.motifs
+        motif: data.motifs,
+        eye: data.symbols.list[3]
     }
     res.render('content', context)
 })
