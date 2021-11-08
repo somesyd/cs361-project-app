@@ -1,7 +1,7 @@
-// var dreamText = document.getElementById('dream-textarea').value
+// var dreamTextBox = document.getElementById('dream-textarea')
 // var dreamSubmit = document.getElementById('dream-submit')
 
 // dreamSubmit.onclick = () => {
-//     alert(dreamText)
+//     var dreamText = dreamTextBox.value
 //     console.log(dreamText)
 // }

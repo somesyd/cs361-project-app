@@ -73,7 +73,7 @@
                         {{#each symbol.list}}
                             <div class="symbol-box tooltip" onClick="displayModal({{this.id}})" data-id={{this.id}} data-text="Click to read more.">
                                 <div class="symbol-image-box">
-                                    <img class="symbol-image" src="/img/{{this.image}}">
+                                    <img class="symbol-image" src="{{this.image}}">
                                 </div>
                                 <div class="symbol-header">{{this.name}}</div>
                                 <div class="symbol-text">{{this.text}}</div>
@@ -83,7 +83,7 @@
                                 <div class="symbol-box modal-content">
                                     <span class="close-modal" onClick="closeModal({{this.id}})">&times;</span>
                                     <div class="symbol-image-box">
-                                        <img class="symbol-image" src="/img/{{this.image}}">
+                                        <img class="symbol-image" src="{{this.image}}">
                                     </div>
                                     <div class="symbol-header">{{this.name}}</div>
                                     <div class="symbol-text">{{this.text}}</div>

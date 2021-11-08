@@ -3,9 +3,10 @@ const express = require('express')
 const dotenv = require('dotenv').config()
 const hbs = require('hbs')
 const data = require('./utils/data')
+const dreamservice = require('./utils/dreamservice')
 
 const app = express()   // express is a function, so we have to start it up
-const port = process.env.PORT || 31474 
+const port = process.env.PORT || 40404 
 
 // define paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public')
@@ -18,6 +19,9 @@ hbs.registerPartials(partialsPath)
 
 // set up static directory to serve
 app.use(express.static(publicDirectoryPath))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 
 app.get('', (req, res) => {
     res.render('index')
@@ -27,7 +31,8 @@ app.get('/form', (req, res) => {
     res.render('form')
 })
 
-app.get('/content', (req, res) => {
+app.post('/content', (req, res) => {
+   
     const context = {
         dreamtext: data.dreamText.dream,
         setting: data.setting,
@@ -40,19 +45,27 @@ app.get('/content', (req, res) => {
     res.render('content', context)
 })
 
+
 app.post('/processing', (req, res) => {
-    
-    // run some dream analysis
-    const fakeData = {
-        dreamtext: data.dreamText.dream,
-        setting: data.setting,
-        characters: data.characters,
-        suggest: data.suggest,
-        symbol: data.symbols,
-        shadow: data.shadow,
-        motif: data.motifs
-    }
-    res.render('content', fakeData)
+ 
+    dreamservice.getDreamData(req.body.dreamtext)
+        .then((dreamData) => {
+
+            
+            const context = {
+                dreamtext: req.body.dreamtext,
+                setting: null,
+                characters: dreamData.characters,
+                suggest: data.suggest,
+                symbol: dreamData.symbols,
+                shadow: null,
+                motif: null
+            }
+            res.render('content', context)
+        }).catch((error) => {
+            console.log(error)
+        })
+
 })
 
 // app.get('', (req, res) => {

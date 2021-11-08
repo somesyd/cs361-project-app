@@ -1,0 +1,117 @@
+const axios = require('axios')
+const DREAM_SERVICE_URL ='https://cs361-somerfis-serve.uw.r.appspot.com'
+const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com'
+ 
+
+// return a sublist of 6 random symbols
+function shuffleSymbols(list) {
+    if (list.length <= 6) {
+        return list
+    } else {
+        const shuffledList = list.sort(() => 0.5 - Math.random())
+        return shuffledList
+    }
+
+}
+
+function buildWikiLinks(symbol) {
+    function buildUrl(element, type) {
+        return WIKI_SCRAPER_URL  + '/' + element + '/' + type
+    }
+    // replace spaces in symbol text; help from: https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
+    symbol.split(' ').join('%20')
+   
+    const summary = buildUrl(symbol, 'summary')
+    const img = buildUrl(symbol, 'image')
+
+    return [summary, img]
+}
+
+function createSymbolObjs(symbolsWikiDataList) {
+    var list = []
+
+    for (let i = 0; i < symbolsWikiDataList.length; i++) {
+
+        // create an object for each symbol in the list
+        let summary = null
+        let image = null
+        const data = symbolsWikiDataList[i][0].data
+        if (data.hasOwnProperty('summary')) {
+            summary = data.summary
+            image = symbolsWikiDataList[i][1].data.image_url
+        } else {
+            image = data.image
+            summary = symbolsWikiDataList[i][1].data.summary
+        }
+
+        const obj = {
+            id: i,
+            name: data.title,
+            image: image,
+            text: summary
+        }
+
+        list.push(obj)
+    }
+    return list
+}
+
+async function getDreamData(text) {
+    try {
+        const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
+
+        // go get references for symbols
+        let symbolList = shuffleSymbols(response.data.symbols)
+        symbolList = symbolList.filter(s => s != 'dream')
+        const symbolsResponse = await getWikipediaData(symbolList)
+        const symbols = createSymbolObjs(symbolsResponse)
+        
+        // build the return object for the template context
+        const dream = {
+            symbols: {
+                list: symbols
+            },
+            characters: {
+                dreamego: response.data.ego
+            }
+        }      
+        return dream
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+async function getWikipediaData(symbolList) {
+  
+    const maxSymbols = 6
+    if (symbolList.length < 6) {
+        maxSymbols = symbolList.length
+    }
+    // loop requests until there are 6 complete symbols OR until list runs out
+    var responseList = []
+    let count = 0
+    while (symbolList.length > 0 && count < maxSymbols) {
+
+        const next = symbolList.pop()
+
+        // create the image and summary request urls
+        const links = buildWikiLinks(next)
+
+        // send the urls
+        const response = await axios.all(links.map(l => axios.get(l)))
+            .then(axios.spread(function (...res) {
+                responseList.push(res)
+                count ++
+            })).catch ((error) => {
+                console.log(error.response.status)
+            })
+
+    }   
+    return responseList         
+}
+
+module.exports = {
+    getDreamData: getDreamData
+}
