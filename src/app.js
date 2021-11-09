@@ -31,27 +31,12 @@ app.get('/form', (req, res) => {
     res.render('form')
 })
 
-app.post('/content', (req, res) => {
-   
-    const context = {
-        dreamtext: data.dreamText.dream,
-        setting: data.setting,
-        characters: data.characters,
-        suggest: data.suggest,
-        symbol: data.symbols,
-        shadow: data.shadow,
-        motif: data.motifs
-    }
-    res.render('content', context)
-})
-
 
 app.post('/processing', (req, res) => {
  
     dreamservice.getDreamData(req.body.dreamtext)
         .then((dreamData) => {
-
-            
+   
             const context = {
                 dreamtext: req.body.dreamtext,
                 setting: null,
@@ -65,15 +50,8 @@ app.post('/processing', (req, res) => {
         }).catch((error) => {
             console.log(error)
         })
-
 })
 
-// app.get('', (req, res) => {
-//     res.render('index', {
-//         title: 'Weather',
-//         name: 'Sydney Somerfield'
-//     })
-// })
 
 // start the server listening
 app.listen(port, () => {

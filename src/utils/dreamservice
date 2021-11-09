@@ -59,10 +59,12 @@ function createSymbolObjs(symbolsWikiDataList) {
 async function getDreamData(text) {
     try {
         const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
-
+        
         // go get references for symbols
         let symbolList = shuffleSymbols(response.data.symbols)
         symbolList = symbolList.filter(s => s != 'dream')
+
+        // call David's service
         const symbolsResponse = await getWikipediaData(symbolList)
         const symbols = createSymbolObjs(symbolsResponse)
         
@@ -107,7 +109,6 @@ async function getWikipediaData(symbolList) {
             })).catch ((error) => {
                 console.log(error.response.status)
             })
-
     }   
     return responseList         
 }

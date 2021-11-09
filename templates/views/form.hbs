@@ -10,11 +10,11 @@
     </head>
 
     <body>
-        <div class="main-content">
+        <div class="main-content" id="main-content-form">
             <div class="main-header">{{>header}}</div>
             <div class="main-container">
                  <a href='/' class="back">< Back to Home</a>
-            
+
                 <div class="dream-form-box">
                     <form id="dream-form" action="/processing" method="post">
                         <textarea id="dream-text" name="dreamtext" placeholder="Share the details of the dream here, as if it was a story ..."></textarea>
@@ -22,11 +22,17 @@
                       
                     </form>
                 </div>
+                
             </div>
             
            
            {{>footer}}
         </div>
+        <div id='loader-box'>
+            <div id='loader-text'><h3>processing... </h3></div>
+            <div id="loader"></div>
+        </div>
+        
         
         
 
