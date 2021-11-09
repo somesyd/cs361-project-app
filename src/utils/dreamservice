@@ -1,6 +1,7 @@
 const axios = require('axios')
 const DREAM_SERVICE_URL ='https://cs361-somerfis-serve.uw.r.appspot.com'
 const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com'
+const GOOGLE_IMAGE_SCRAPER_URL = 'https://mycovidupdatermicroservice.herokuapp.com/imgScraper'
  
 
 // return a sublist of 6 random symbols
@@ -26,6 +27,7 @@ function buildWikiLinks(symbol) {
 
     return [summary, img]
 }
+
 
 function createSymbolObjs(symbolsWikiDataList) {
     var list = []
@@ -56,9 +58,113 @@ function createSymbolObjs(symbolsWikiDataList) {
     return list
 }
 
+function pickSettings(list) {
+    console.log(list)
+    // get settings that have more description (whitespace)
+    var descriptive = []
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].includes(' ')) {
+            descriptive.push(list[i]) // add to descriptive
+        }
+    }
+
+
+    // if there are fewer than 3 descriptive settings, grab more to make up 3     
+    if (descriptive.length < 3) {
+         // first, remove already taken from the list
+        list = list.filter((item) => !descriptive.includes(item))
+
+        var shuffledList = list.sort(() => 0.5 - Math.random())
+
+        // add psuedo-random settings
+        while (descriptive.length < 3) {
+            descriptive.push(shuffledList.pop())
+        }
+    }
+
+    // if there are more than 3, take out some descriptions
+    if (descriptive.length > 3) {
+        descriptive.sort(() => 0.5 - Math.random())
+        while (descriptive.length > 3) {
+            descriptive.pop()
+        }
+    }
+
+    return descriptive
+}
+
+function buildGoogleLinks(settingsList, numImages) {
+    var GoogleRequests = []
+
+    for (let i = 0; i < settingsList.length; i++) {
+        console.log(settingsList[i])
+        obj = {
+            imgSize: 'LARGE',
+            fileType: 'jpeg',
+            imgType: 'photo',
+            num: numImages,
+            q: settingsList[i]
+        }
+        const request = axios.post(GOOGLE_IMAGE_SCRAPER_URL, obj)
+        GoogleRequests.push(request)
+    }
+    console.log(GoogleRequests)
+    return GoogleRequests
+
+}
+
+async function getGoogleImages(list, numImages) {
+    const googleRequests = buildGoogleLinks(list, numImages)
+    console.log(googleRequests)
+    
+    var images = []
+    // await axios.all(googleRequests)
+    //     .then(axios.spread((...responses) => {
+
+    //         // loop through each response
+    //         responses.forEach((res) => {
+    //             const response = res.data
+    //              // remove the query property
+    //              delete response['Image URLs for query']
+
+    //             // add the values to the return list
+    //             Object.values(response).forEach((image) => {
+    //                 images.push(image)
+    //             })
+    //         })
+
+    //     })).catch((error) => {
+    //         // console.log(error.response.status)
+    //         console.log(error)
+    //     })
+    console.log(images)
+    return images
+}
+
 async function getDreamData(text) {
     try {
         const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
+
+        console.log(response.data.sub_settings)
+        console.log(response.data.characters)
+        // pick settings and number of images per request
+        const longSettings = response.data.settings
+        let settingList = pickSettings(response.data.sub_settings)
+        let numImages = 2
+        if (settingList.length === 2) {
+            numImages = 3
+        } else if (settingList.length === 1) {
+            numImages = 6
+        }
+
+        // get the setting images
+        console.log(settingList)
+        console.log(numImages)
+        const settingImages = await getGoogleImages(settingList, numImages)
+        console.log(settingImages)
+        
+
+
         
         // go get references for symbols
         let symbolList = shuffleSymbols(response.data.symbols)
@@ -70,13 +176,19 @@ async function getDreamData(text) {
         
         // build the return object for the template context
         const dream = {
+            setting: {
+                text: [longSettings],
+                photos: settingImages
+            },
             symbols: {
                 list: symbols
             },
             characters: {
-                dreamego: response.data.ego
+                dreamego: response.data.ego,
+                figures: response.data.characters
             }
-        }      
+        }   
+        console.log(dream)   
         return dream
 
     } catch (error) {

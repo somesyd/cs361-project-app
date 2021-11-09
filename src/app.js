@@ -32,6 +32,7 @@ app.get('/form', (req, res) => {
 })
 
 
+
 app.post('/processing', (req, res) => {
  
     dreamservice.getDreamData(req.body.dreamtext)
@@ -39,7 +40,7 @@ app.post('/processing', (req, res) => {
    
             const context = {
                 dreamtext: req.body.dreamtext,
-                setting: null,
+                setting: dreamData.setting,
                 characters: dreamData.characters,
                 suggest: data.suggest,
                 symbol: dreamData.symbols,
@@ -51,6 +52,7 @@ app.post('/processing', (req, res) => {
             console.log(error)
         })
 })
+
 
 
 // start the server listening
