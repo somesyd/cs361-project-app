@@ -1,7 +1,8 @@
 const axios = require('axios')
-const DREAM_SERVICE_URL ='https://cs361-somerfis-serve.uw.r.appspot.com'
+const DREAM_SERVICE_URL ='https://cs361-parsely-rjg4g6kr7q-uw.a.run.app'
 const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com'
 const GOOGLE_IMAGE_SCRAPER_URL = 'https://mycovidupdatermicroservice.herokuapp.com/imgScraper'
+const GRAPH_SERVICE_URL = 'https://analytics-app-361.herokuapp.com/graphs_ms'
  
 
 // return a sublist of 6 random symbols
@@ -59,7 +60,6 @@ function createSymbolObjs(symbolsWikiDataList) {
 }
 
 function pickSettings(list) {
-    console.log(list)
     // get settings that have more description (whitespace)
     var descriptive = []
     for (let i = 0; i < list.length; i++) {
@@ -72,6 +72,7 @@ function pickSettings(list) {
     // if there are fewer than 3 descriptive settings, grab more to make up 3     
     if (descriptive.length < 3) {
          // first, remove already taken from the list
+         // help from: https://stackoverflow.com/questions/19957348/remove-all-elements-contained-in-another-array
         list = list.filter((item) => !descriptive.includes(item))
 
         var shuffledList = list.sort(() => 0.5 - Math.random())
@@ -97,7 +98,6 @@ function buildGoogleLinks(settingsList, numImages) {
     var GoogleRequests = []
 
     for (let i = 0; i < settingsList.length; i++) {
-        console.log(settingsList[i])
         obj = {
             imgSize: 'LARGE',
             fileType: 'jpeg',
@@ -108,11 +108,21 @@ function buildGoogleLinks(settingsList, numImages) {
         const request = axios.post(GOOGLE_IMAGE_SCRAPER_URL, obj)
         GoogleRequests.push(request)
     }
-    console.log(GoogleRequests)
     return GoogleRequests
+}
+
+async function getGraphs(graphObj) {
+    
+    return axios.post(GRAPH_SERVICE_URL, graphObj)
+        .then((res) => {
+            return res.data
+        }).catch ((error) => {
+            console.log(error.status)
+        })
 
 }
 
+// sending multiple requests with axios: https://www.storyblok.com/tp/how-to-send-multiple-requests-using-axios
 async function getGoogleImages(list, numImages) {
     const googleRequests = buildGoogleLinks(list, numImages)
     console.log(googleRequests)
@@ -137,8 +147,29 @@ async function getGoogleImages(list, numImages) {
     //         // console.log(error.response.status)
     //         console.log(error)
     //     })
-    console.log(images)
     return images
+}
+
+function formatSentimentData(data) {
+    table = []
+    for (let i = 0; i < data.length; i++) {
+        point = {
+            polarity: data[i][0],
+            subjectivity: data[i][1]
+        }
+        table.push(point)
+    }
+    graph = {
+        graph_type: "scatter",
+        colors: "Reds",
+        xaxis: "polarity",
+        yaxis: "subjectivity",
+        xlabel: "Polarity: Negative to Positive",
+        ylabel: "Emotional Intensity",
+        title: "Dream Sentiment",
+        table: table
+    }
+    return graph
 }
 
 async function getDreamData(text) {
@@ -158,13 +189,16 @@ async function getDreamData(text) {
         }
 
         // get the setting images
-        console.log(settingList)
-        console.log(numImages)
         const settingImages = await getGoogleImages(settingList, numImages)
-        console.log(settingImages)
         
-
-
+        // get the graphs/plots
+        const sentimentData = response.data.sentiment
+       
+        // format the data for the plots
+        const scatterPlot = formatSentimentData(sentimentData)
+        
+        // send the data to the service
+        const graphFile = await getGraphs(scatterPlot)
         
         // go get references for symbols
         let symbolList = shuffleSymbols(response.data.symbols)
@@ -186,6 +220,9 @@ async function getDreamData(text) {
             characters: {
                 dreamego: response.data.ego,
                 figures: response.data.characters
+            },
+            motif: {
+                graph: graphFile
             }
         }   
         console.log(dream)   

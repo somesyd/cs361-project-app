@@ -45,7 +45,7 @@ app.post('/processing', (req, res) => {
                 suggest: data.suggest,
                 symbol: dreamData.symbols,
                 shadow: null,
-                motif: null
+                motif: dreamData.motif
             }
             res.render('content', context)
         }).catch((error) => {
