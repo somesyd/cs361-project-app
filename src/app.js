@@ -44,8 +44,8 @@ app.post('/processing', (req, res) => {
                 characters: dreamData.characters,
                 suggest: data.suggest,
                 symbol: dreamData.symbols,
-                shadow: null,
-                motif: dreamData.motif
+                shadow: dreamData.shadow,
+                sentiment: dreamData.sentiment
             }
             res.render('content', context)
         }).catch((error) => {

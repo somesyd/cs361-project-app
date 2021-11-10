@@ -299,6 +299,7 @@
     max-width: 50%;
     margin: auto;
     display: block;
+    padding-top: 2em;
 }
 
 #footer-box {

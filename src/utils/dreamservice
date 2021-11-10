@@ -1,9 +1,51 @@
 const axios = require('axios')
-const DREAM_SERVICE_URL ='https://cs361-parsely-rjg4g6kr7q-uw.a.run.app'
-const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com'
-const GOOGLE_IMAGE_SCRAPER_URL = 'https://mycovidupdatermicroservice.herokuapp.com/imgScraper'
-const GRAPH_SERVICE_URL = 'https://analytics-app-361.herokuapp.com/graphs_ms'
+const DREAM_SERVICE_URL ='https://cs361-parsely-rjg4g6kr7q-uw.a.run.app' // my service
+const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com' // David Ju's service
+const GOOGLE_IMAGE_SCRAPER_URL = 'https://mycovidupdatermicroservice.herokuapp.com/imgScraper' // Alexandre Duclos
+const GRAPH_SERVICE_URL = 'https://analytics-app-361.herokuapp.com/graphs_ms' // Spencer Wagner's service
  
+
+graph_types = {
+    general_sentiment:  {
+        graph_type: "scatter",
+        colors: "RdBu",
+        xaxis: "polarity",
+        yaxis: "subjectivity",
+        xlabel: "Polarity: Negative to Positive",
+        ylabel: "Emotional Intensity",
+        title: "Dream Sentiment"
+    },
+    doc_graphs: {
+        doc_polarity:  {
+            graph_type: "pie",
+            colors: "Greys",
+            xaxis: "polarity",
+            yaxis: "proportion",
+            xlabel: "",
+            ylabel: "",
+            title: "Polarity: Positive to Negative"
+        },
+        doc_emotion:  {
+            graph_type: "pie",
+            colors: "Greys",
+            xaxis: "subjectivity",
+            yaxis: "proportion",
+            xlabel: "",
+            ylabel: "",
+            title: "Emotion"
+        }
+    },
+    shadow:  {
+        graph_type: "scatter",
+        colors: "gray",
+        xaxis: "polarity",
+        yaxis: "subjectivity",
+        xlabel: "Polarity: Negative to Positive",
+        ylabel: "Emotional Intensity",
+        title: "Shadow Sentiment"
+    },
+
+}
 
 // return a sublist of 6 random symbols
 function shuffleSymbols(list) {
@@ -111,15 +153,14 @@ function buildGoogleLinks(settingsList, numImages) {
     return GoogleRequests
 }
 
-async function getGraphs(graphObj) {
-    
-    return axios.post(GRAPH_SERVICE_URL, graphObj)
+async function getGraph(graphObj) {
+
+    return await axios.post(GRAPH_SERVICE_URL, graphObj)
         .then((res) => {
             return res.data
         }).catch ((error) => {
             console.log(error.status)
-        })
-
+        }) 
 }
 
 // sending multiple requests with axios: https://www.storyblok.com/tp/how-to-send-multiple-requests-using-axios
@@ -150,34 +191,76 @@ async function getGoogleImages(list, numImages) {
     return images
 }
 
-function formatSentimentData(data) {
+function getShadowData(data) {
+    const shadow = []
+    for (let i = 0; i < data.length; i++) {
+        if (data[i][1] < 0) {
+            shadow.push(data[i])
+        }
+    }
+    return shadow
+}
+
+// graphObj = { graph_type, colors, xaxis, yaxis, xlabel, ylabel, title }
+function formatSentimentData(data, graphObj, pol=1, subj=2) {
     table = []
     for (let i = 0; i < data.length; i++) {
         point = {
-            polarity: data[i][0],
-            subjectivity: data[i][1]
+            polarity: data[i][pol],
+            subjectivity: data[i][subj]
         }
         table.push(point)
     }
-    graph = {
-        graph_type: "scatter",
-        colors: "Reds",
-        xaxis: "polarity",
-        yaxis: "subjectivity",
-        xlabel: "Polarity: Negative to Positive",
-        ylabel: "Emotional Intensity",
-        title: "Dream Sentiment",
-        table: table
+    graphObj.table = table
+    
+    return graphObj
+}
+
+function formatDocPieData(data, graphObjs) {
+    let [pos, neg] = [0, 0]
+    
+    let polarity = Math.round(data[0] * 100)
+    if (polarity < 0) {
+        pos = 100 - Math.abs(polarity)
+        neg = 100 - pos
+    } else {
+        pos = polarity
+        neg = 100 - pos
     }
-    return graph
+    polarity_table = [
+        {
+            polarity: "positive",
+            proportion: pos
+        },
+        {
+            polarity: "negative",
+            proportion: neg
+        }
+    ]
+    emotion_proportion = Math.round(data[1] * 100)
+    emotion_table = [
+        {
+            subjectivity: "neutral",
+            proportion: 100 - emotion_proportion 
+        },
+        {
+            subjectivity: "emotion",
+            proportion: emotion_proportion
+        }
+    ]
+    graphObjs.doc_polarity.table = polarity_table
+    graphObjs.doc_emotion.table = emotion_table
+
+    console.log(polarity_table)
+    console.log(emotion_table)
+    return graphObjs 
 }
 
 async function getDreamData(text) {
     try {
         const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
 
-        console.log(response.data.sub_settings)
-        console.log(response.data.characters)
+
         // pick settings and number of images per request
         const longSettings = response.data.settings
         let settingList = pickSettings(response.data.sub_settings)
@@ -188,17 +271,25 @@ async function getDreamData(text) {
             numImages = 6
         }
 
-        // get the setting images
+        // get the setting images from Alex's service
         const settingImages = await getGoogleImages(settingList, numImages)
         
-        // get the graphs/plots
+        // build the graphs/plots
         const sentimentData = response.data.sentiment
-       
-        // format the data for the plots
-        const scatterPlot = formatSentimentData(sentimentData)
+        const shadowData = getShadowData(response.data.sentiment)
+        const egoData = response.data.ego_sentiment
+
+        // format graph data
+        const sentimentScatterPlot = formatSentimentData(sentimentData, graph_types.general_sentiment)
+        const shadowScatterPlot = formatSentimentData(shadowData, graph_types.shadow)
+        const docPiePlots = formatDocPieData(response.data.doc_sentiment, graph_types.doc_graphs)
         
-        // send the data to the service
-        const graphFile = await getGraphs(scatterPlot)
+        // send the data to Spencer's service
+        const sentimentGraphFile = await getGraph(sentimentScatterPlot)
+        const shadowGraphFile = await getGraph(shadowScatterPlot)
+        console.log(docPiePlots.doc_polarity)
+        const docPolarityPieFile = await getGraph(docPiePlots.doc_polarity)
+        const docEmotionPieFile = await getGraph(docPiePlots.doc_emotion)
         
         // go get references for symbols
         let symbolList = shuffleSymbols(response.data.symbols)
@@ -207,6 +298,14 @@ async function getDreamData(text) {
         // call David's service
         const symbolsResponse = await getWikipediaData(symbolList)
         const symbols = createSymbolObjs(symbolsResponse)
+
+        // get shadow words
+        var shadowList = []
+        for (let i = 0; i < shadowData.length; i++) {
+            shadowList.push(shadowData[i][0])
+        }
+        console.log(shadowList)
+        
         
         // build the return object for the template context
         const dream = {
@@ -221,8 +320,14 @@ async function getDreamData(text) {
                 dreamego: response.data.ego,
                 figures: response.data.characters
             },
-            motif: {
-                graph: graphFile
+            shadow: {
+                words: shadowList,
+                meter: shadowGraphFile
+            },
+            sentiment: {
+                scatter: sentimentGraphFile,
+                polarity: docPolarityPieFile,
+                emotion: docEmotionPieFile
             }
         }   
         console.log(dream)   
