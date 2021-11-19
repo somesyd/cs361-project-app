@@ -1,106 +1,90 @@
 const axios = require('axios')
+const url = require('url')
+const gsearch = require('./gsearch')
+
 const DREAM_SERVICE_URL ='https://cs361-parsely-rjg4g6kr7q-uw.a.run.app' // my service
 const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com' // David Ju's service
-const GOOGLE_IMAGE_SCRAPER_URL = 'https://mycovidupdatermicroservice.herokuapp.com/imgScraper' // Alexandre Duclos
 const GRAPH_SERVICE_URL = 'https://analytics-app-361.herokuapp.com/graphs_ms' // Spencer Wagner's service
- 
-
-graph_types = {
-    general_sentiment:  {
-        graph_type: "scatter",
-        colors: "RdBu",
-        xaxis: "polarity",
-        yaxis: "subjectivity",
-        xlabel: "Polarity: Negative to Positive",
-        ylabel: "Emotional Intensity",
-        title: "Dream Sentiment"
-    },
-    doc_graphs: {
-        doc_polarity:  {
-            graph_type: "pie",
-            colors: "Greys",
-            xaxis: "polarity",
-            yaxis: "proportion",
-            xlabel: "",
-            ylabel: "",
-            title: "Polarity: Positive to Negative"
-        },
-        doc_emotion:  {
-            graph_type: "pie",
-            colors: "Greys",
-            xaxis: "subjectivity",
-            yaxis: "proportion",
-            xlabel: "",
-            ylabel: "",
-            title: "Emotion"
-        }
-    },
-    shadow:  {
-        graph_type: "scatter",
-        colors: "gray",
-        xaxis: "polarity",
-        yaxis: "subjectivity",
-        xlabel: "Polarity: Negative to Positive",
-        ylabel: "Emotional Intensity",
-        title: "Shadow Sentiment"
-    },
-
-}
-
-// return a sublist of 6 random symbols
-function shuffleSymbols(list) {
-    if (list.length <= 6) {
-        return list
-    } else {
-        const shuffledList = list.sort(() => 0.5 - Math.random())
-        return shuffledList
-    }
-
-}
-
-function buildWikiLinks(symbol) {
-    function buildUrl(element, type) {
-        return WIKI_SCRAPER_URL  + '/' + element + '/' + type
-    }
-    // replace spaces in symbol text; help from: https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
-    symbol.split(' ').join('%20')
-   
-    const summary = buildUrl(symbol, 'summary')
-    const img = buildUrl(symbol, 'image')
-
-    return [summary, img]
-}
 
 
-function createSymbolObjs(symbolsWikiDataList) {
-    var list = []
+async function getDreamData(text) {
+    try {
+        const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
 
-    for (let i = 0; i < symbolsWikiDataList.length; i++) {
-
-        // create an object for each symbol in the list
-        let summary = null
-        let image = null
-        const data = symbolsWikiDataList[i][0].data
-        if (data.hasOwnProperty('summary')) {
-            summary = data.summary
-            image = symbolsWikiDataList[i][1].data.image_url
-        } else {
-            image = data.image
-            summary = symbolsWikiDataList[i][1].data.summary
+        // pick settings and number of images per request
+        const longSettings = response.data.settings
+        let settingList = pickSettings(response.data.sub_settings)
+        let numImages = 2
+        if (settingList.length === 2) {
+            numImages = 3
+        } else if (settingList.length === 1) {
+            numImages = 6
         }
 
-        const obj = {
-            id: i,
-            name: data.title,
-            image: image,
-            text: summary
-        }
+        // get the setting images from Alex's service
+        const settingImages = await gsearch.getGoogleImages(settingList, numImages)
+        console.log(settingImages)
+        
+        // build the graphs/plots
+        const sentimentData = response.data.sentiment
+        const shadowData = getShadowData(response.data.sentiment)
 
-        list.push(obj)
+        // format graph data
+        const sentimentScatterPlot = formatSentimentData(sentimentData, graph_types.general_sentiment)
+        const shadowScatterPlot = formatSentimentData(shadowData, graph_types.shadow)
+        const docPiePlots = formatDocPieData(response.data.doc_sentiment, graph_types.doc_graphs)
+        
+        // send the data to Spencer's service
+        const sentimentGraphFile = await getGraph(sentimentScatterPlot)
+        const shadowGraphFile = await getGraph(shadowScatterPlot)
+        const docPolarityPieFile = await getGraph(docPiePlots.doc_polarity)
+        const docEmotionPieFile = await getGraph(docPiePlots.doc_emotion)
+        
+        // go get references for symbols
+        let symbolList = shuffleSymbols(response.data.symbols)
+        symbolList = symbolList.filter(s => s != 'dream')
+
+        // call David's service
+        const symbolsResponse = await getWikipediaData(symbolList)
+        const symbols = createSymbolObjs(symbolsResponse)
+
+        // get shadow words
+        var shadowList = []
+        for (let i = 0; i < shadowData.length; i++) {
+            shadowList.push(shadowData[i][0])
+        }
+               
+        // build the return object for the template context
+        const dream = {
+            setting: {
+                text: [longSettings],
+                photos: settingImages
+            },
+            symbols: {
+                list: symbols
+            },
+            characters: {
+                dreamego: response.data.ego,
+                figures: response.data.characters
+            },
+            shadow: {
+                words: shadowList,
+                meter: shadowGraphFile
+            },
+            sentiment: {
+                scatter: sentimentGraphFile,
+                polarity: docPolarityPieFile,
+                emotion: docEmotionPieFile
+            }
+        }    
+        return dream
+
+    } catch (error) {
+        console.log(error)
     }
-    return list
 }
 
+/* -------   Setting Content Helper Functions  -------- */
 function pickSettings(list) {
     // get settings that have more description (whitespace)
     var descriptive = []
@@ -109,7 +93,6 @@ function pickSettings(list) {
             descriptive.push(list[i]) // add to descriptive
         }
     }
-
 
     // if there are fewer than 3 descriptive settings, grab more to make up 3     
     if (descriptive.length < 3) {
@@ -136,59 +119,49 @@ function pickSettings(list) {
     return descriptive
 }
 
-function buildGoogleLinks(settingsList, numImages) {
-    var GoogleRequests = []
 
-    for (let i = 0; i < settingsList.length; i++) {
-        obj = {
-            imgSize: 'LARGE',
-            fileType: 'jpeg',
-            imgType: 'photo',
-            num: numImages,
-            q: settingsList[i]
+
+/* -------   Graph Content Helper Functions  -------- */
+graph_types = {
+    general_sentiment:  {
+        graph_type: "scatter",
+        colors: "RdBu",
+        xaxis: "polarity",
+        yaxis: "subjectivity",
+        xlabel: "Polarity: Negative to Positive",
+        ylabel: "Emotional Intensity",
+        title: "Dream Sentiment"
+    },
+    doc_graphs: {
+        doc_polarity:  {
+            graph_type: "pie",
+            colors: "Greys",
+            xaxis: "polarity",
+            yaxis: "proportion",
+            xlabel: "",
+            ylabel: "",
+            title: "Polarity: Positive to Negative"
+        },
+        doc_emotion:  {
+            graph_type: "pie",
+            colors: "Purples",
+            xaxis: "subjectivity",
+            yaxis: "proportion",
+            xlabel: "",
+            ylabel: "",
+            title: "Emotion"
         }
-        const request = axios.post(GOOGLE_IMAGE_SCRAPER_URL, obj)
-        GoogleRequests.push(request)
-    }
-    return GoogleRequests
-}
+    },
+    shadow:  {
+        graph_type: "scatter",
+        colors: "gray",
+        xaxis: "polarity",
+        yaxis: "subjectivity",
+        xlabel: "Polarity: Negative to Positive",
+        ylabel: "Emotional Intensity",
+        title: "Shadow Sentiment"
+    },
 
-async function getGraph(graphObj) {
-
-    return await axios.post(GRAPH_SERVICE_URL, graphObj)
-        .then((res) => {
-            return res.data
-        }).catch ((error) => {
-            console.log(error.status)
-        }) 
-}
-
-// sending multiple requests with axios: https://www.storyblok.com/tp/how-to-send-multiple-requests-using-axios
-async function getGoogleImages(list, numImages) {
-    const googleRequests = buildGoogleLinks(list, numImages)
-    console.log(googleRequests)
-    
-    var images = []
-    // await axios.all(googleRequests)
-    //     .then(axios.spread((...responses) => {
-
-    //         // loop through each response
-    //         responses.forEach((res) => {
-    //             const response = res.data
-    //              // remove the query property
-    //              delete response['Image URLs for query']
-
-    //             // add the values to the return list
-    //             Object.values(response).forEach((image) => {
-    //                 images.push(image)
-    //             })
-    //         })
-
-    //     })).catch((error) => {
-    //         // console.log(error.response.status)
-    //         console.log(error)
-    //     })
-    return images
 }
 
 function getShadowData(data) {
@@ -221,11 +194,11 @@ function formatDocPieData(data, graphObjs) {
     
     let polarity = Math.round(data[0] * 100)
     if (polarity < 0) {
-        pos = 100 - Math.abs(polarity)
-        neg = 100 - pos
+        pos = 200 - (Math.abs(polarity) + 100)
+        neg = 200 - pos
     } else {
-        pos = polarity
-        neg = 100 - pos
+        pos = polarity + 100
+        neg = 200 - pos
     }
     polarity_table = [
         {
@@ -251,94 +224,74 @@ function formatDocPieData(data, graphObjs) {
     graphObjs.doc_polarity.table = polarity_table
     graphObjs.doc_emotion.table = emotion_table
 
-    console.log(polarity_table)
-    console.log(emotion_table)
     return graphObjs 
 }
 
-async function getDreamData(text) {
-    try {
-        const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
+/* SPENCER's Graphing microservice call */
+async function getGraph(graphObj) {
 
+    return await axios.post(GRAPH_SERVICE_URL, graphObj)
+        .then((res) => {
+            return res.data
+        }).catch ((error) => {
+            console.log(error.response.status)
+        }) 
+}
 
-        // pick settings and number of images per request
-        const longSettings = response.data.settings
-        let settingList = pickSettings(response.data.sub_settings)
-        let numImages = 2
-        if (settingList.length === 2) {
-            numImages = 3
-        } else if (settingList.length === 1) {
-            numImages = 6
-        }
-
-        // get the setting images from Alex's service
-        const settingImages = await getGoogleImages(settingList, numImages)
-        
-        // build the graphs/plots
-        const sentimentData = response.data.sentiment
-        const shadowData = getShadowData(response.data.sentiment)
-        const egoData = response.data.ego_sentiment
-
-        // format graph data
-        const sentimentScatterPlot = formatSentimentData(sentimentData, graph_types.general_sentiment)
-        const shadowScatterPlot = formatSentimentData(shadowData, graph_types.shadow)
-        const docPiePlots = formatDocPieData(response.data.doc_sentiment, graph_types.doc_graphs)
-        
-        // send the data to Spencer's service
-        const sentimentGraphFile = await getGraph(sentimentScatterPlot)
-        const shadowGraphFile = await getGraph(shadowScatterPlot)
-        console.log(docPiePlots.doc_polarity)
-        const docPolarityPieFile = await getGraph(docPiePlots.doc_polarity)
-        const docEmotionPieFile = await getGraph(docPiePlots.doc_emotion)
-        
-        // go get references for symbols
-        let symbolList = shuffleSymbols(response.data.symbols)
-        symbolList = symbolList.filter(s => s != 'dream')
-
-        // call David's service
-        const symbolsResponse = await getWikipediaData(symbolList)
-        const symbols = createSymbolObjs(symbolsResponse)
-
-        // get shadow words
-        var shadowList = []
-        for (let i = 0; i < shadowData.length; i++) {
-            shadowList.push(shadowData[i][0])
-        }
-        console.log(shadowList)
-        
-        
-        // build the return object for the template context
-        const dream = {
-            setting: {
-                text: [longSettings],
-                photos: settingImages
-            },
-            symbols: {
-                list: symbols
-            },
-            characters: {
-                dreamego: response.data.ego,
-                figures: response.data.characters
-            },
-            shadow: {
-                words: shadowList,
-                meter: shadowGraphFile
-            },
-            sentiment: {
-                scatter: sentimentGraphFile,
-                polarity: docPolarityPieFile,
-                emotion: docEmotionPieFile
-            }
-        }   
-        console.log(dream)   
-        return dream
-
-    } catch (error) {
-        console.log(error)
+/* -------   Symbol Content Helper Functions  -------- */
+// return a sublist of 6 random symbols
+function shuffleSymbols(list) {
+    if (list.length <= 6) {
+        return list
+    } else {
+        const shuffledList = list.sort(() => 0.5 - Math.random())
+        return shuffledList
     }
 }
 
+function createSymbolObjs(symbolsWikiDataList) {
+    var list = []
 
+    for (let i = 0; i < symbolsWikiDataList.length; i++) {
+
+        // create an object for each symbol in the list
+        let summary = null
+        let image = null
+        const data = symbolsWikiDataList[i][0].data
+        if (data.hasOwnProperty('summary')) {
+            summary = data.summary
+            image = symbolsWikiDataList[i][1].data.image_url
+        } else {
+            image = data.image
+            summary = symbolsWikiDataList[i][1].data.summary
+        }
+
+        const obj = {
+            id: i,
+            name: data.title,
+            image: image,
+            text: summary
+        }
+
+        list.push(obj)
+    }
+    return list
+}
+
+function buildWikiLinks(symbol) {
+    function buildUrl(element, type) {
+        return WIKI_SCRAPER_URL  + '/' + element + '/' + type
+    }
+    // replace spaces in symbol text; help from: https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
+    symbol.split(' ').join('%20')
+   
+    const summary = buildUrl(symbol, 'summary')
+    const img = buildUrl(symbol, 'image')
+
+    return [summary, img]
+}
+
+/* DAVID's Microservice Calls */
 async function getWikipediaData(symbolList) {
   
     const maxSymbols = 6
@@ -360,12 +313,16 @@ async function getWikipediaData(symbolList) {
             .then(axios.spread(function (...res) {
                 responseList.push(res)
                 count ++
+                // console.log(res[0].data)
+                // console.log(res[1].data)
+                return
             })).catch ((error) => {
                 console.log(error.response.status)
             })
     }   
     return responseList         
 }
+
 
 module.exports = {
     getDreamData: getDreamData

@@ -23,6 +23,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 
+
 app.get('', (req, res) => {
     res.render('index')
 })
@@ -30,8 +31,6 @@ app.get('', (req, res) => {
 app.get('/form', (req, res) => {
     res.render('form')
 })
-
-
 
 app.post('/processing', (req, res) => {
  
@@ -52,7 +51,6 @@ app.post('/processing', (req, res) => {
             console.log(error)
         })
 })
-
 
 
 // start the server listening
