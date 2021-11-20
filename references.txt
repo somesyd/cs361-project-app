@@ -1,0 +1,10 @@
+PROJECT REFERENCES:
+
+Removing all elements in one array from another: 
+https://stackoverflow.com/questions/19957348/remove-all-elements-contained-in-another-array
+
+format string whitespace for url: 
+https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-javascript
+
+distributing elements more or less evenly:
+https://stackoverflow.com/questions/9776555/how-to-divide-number-into-integer-pieces-that-are-each-a-multiple-of-n

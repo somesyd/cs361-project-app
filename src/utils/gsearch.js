@@ -3,7 +3,7 @@ const url = require('url')
 const GOOGLE_SEARCH_URL = 'https://www.googleapis.com/customsearch/v1'
 
 
-function buildGoogleLinks(settingsList, numImages) {
+function buildGoogleLinks(settingsList) {
     var GoogleRequests = []
 
     for (let i = 0; i < settingsList.length; i++) {
@@ -16,9 +16,9 @@ function buildGoogleLinks(settingsList, numImages) {
             imgSize: 'large',
             fileType: 'jpeg',
             imgType: 'photo',
-            rights: 'cc_publicdomain',
-            num: numImages,
-            q: settingsList[i]
+            // rights: 'cc_publicdomain',
+            num: settingsList[i].num,
+            q: settingsList[i].string
         }
         
         const request = axios.get(GOOGLE_SEARCH_URL, { params: paramsObj })
