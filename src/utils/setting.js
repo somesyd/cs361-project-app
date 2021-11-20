@@ -11,7 +11,7 @@ async function getSetting(longSettings, shortSettings) {
             shortSettings = pickSettings(shortSettings)
             const imageDistribution = setImageNumberPerPhrase(shortSettings, MAX_NUM_IMAGES)
 
-            // can turn off Google Custom Search if close to limit
+            // CALL_IMAGES can turn off Google Custom Search if close to limit
             if (CALL_IMAGES) {
                 const settingImages = await gsearch.getGoogleImages(imageDistribution)
                 setting.photos = settingImages
@@ -23,7 +23,7 @@ async function getSetting(longSettings, shortSettings) {
             setting.photos = null
         }   
     } else {
-        setting.text = ['No dream setting information was retreived.']
+        setting.error = 'No dream setting information was retrieved.'
     }
     return setting
 }

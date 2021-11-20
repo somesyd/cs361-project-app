@@ -18,6 +18,7 @@
             </div>
             <div id="dream-setting">
                 <div class="content-header">the setting</div>
+                {{#unless setting.error}}
                 <ul class="phrase-block">
                     {{#each setting.text}}
                     <li class="phrase comma">{{this}}</li>
@@ -28,37 +29,44 @@
                         <img class="image" src="{{this}}">
                     {{/each}}  
                 </div>
+                {{/unless}}
+                {{#if setting.error}}
+                    <ul class="phrase-block">
+                        <li class="phrase comma">{{setting.error}}</li>   
+                    </ul>
+                {{/if}}
             </div>
             <div id="dream-characters">
                 <div class="content-header">the characters</div>
                 <div class="sub-block">
                     <div class="content-subheader">dream ego</div>
+                    {{#unless characters.dreamego.error}}
                     <ul class="bullets">
                         {{#each characters.dreamego}}
                             <li>{{this}}</li>
                         {{/each}}       
                     </ul>
-                    {{!-- <img class="meter" src="/img/{{characters.agency}}"> --}}
+                    {{/unless}}
+                    {{#if characters.dreamego.error}}
+                        <ul class="phrase-block">
+                            <li class="phrase comma">{{characters.dreamego.error}}</li>   
+                        </ul>
+                    {{/if}}
                 </div>
                 <div class="sub-block">
                     <div class="content-subheader">dream figures</div>
-                    <div class="mini-block">
-                        <div class="mini-block-header">anima/animus figures:</div>
-                        <ul class="mini-phrase-block">
-                            {{#each characters.anim}}
-                            <li class="phrase comma">{{this}}</li>
-                            {{/each}}
+                    {{#unless characters.figures.error}}  
+                    <ul class="phrase-block">
+                        {{#each characters.figures}}
+                        <li class="phrase comma">{{this}}</li>
+                        {{/each}}
+                    </ul>
+                    {{/unless}}
+                    {{#if characters.figures.error}}
+                        <ul class="phrase-block">
+                            <li class="phrase comma">{{characters.figures.error}}</li>   
                         </ul>
-                    </div>
-                    <div class="mini-block">
-                        <div class="mini-block-header">other figures:</div>
-                        <ul class="mini-phrase-block">
-                            {{#each characters.figures}}
-                            <li class="phrase comma">{{this}}</li>
-                            {{/each}}
-                        </ul>
-                    </div>
-                    
+                    {{/if}}
                 </div>
                 <div class="suggestions">
                     <b class="suggestion-title">{{suggest.characters.title}}</b>
@@ -69,6 +77,7 @@
                 <div class="content-header">dream images</div>
                 <div class="sub-block">
                     <div class="content-subheader">prominent words and phrases</div>
+                    {{#unless symbol.error}}
                     <div class="symbol-gallery">
                         {{#each symbol.list}}
                             <div class="symbol-box tooltip" onClick="displayModal({{this.id}})" data-id={{this.id}} data-text="Click to read more.">
@@ -91,6 +100,12 @@
                             </div>
                         {{/each}}
                     </div>
+                    {{/unless}}
+                    {{#if symbol.error}}
+                        <ul class="phrase-block">
+                            <li class="phrase comma">{{symbol.error}}</li>   
+                        </ul>
+                    {{/if}}
                     <div class="suggestions">
                         <b class="suggestion-title">{{suggest.symbols.title}}</b>
                     <span class="suggestion-text">{{suggest.symbols.text}}</span>
@@ -99,6 +114,7 @@
             </div>
             <div id="dream-shadow">
                 <div class="content-header">shadow</div>
+                {{#unless shadow.error}}
                 <div class="sub-block">
                      <ul class="mini-phrase-block">
                             {{#each shadow.words}}
@@ -106,6 +122,12 @@
                             {{/each}}
                      </ul>
                      <img class="pie-chart" src="data:image/png;base64,{{shadow.meter}}">
+                {{/unless}}
+                {{#if shadow.error}}
+                    <ul class="phrase-block">
+                        <li class="phrase comma">{{shadow.error}}</li>   
+                    </ul>
+                {{/if}}
                      <div class="suggestions">
                         <b class="suggestion-title">{{suggest.shadow.title}}</b>
                     <span class="suggestion-text">{{suggest.shadow.text}}</span>
@@ -114,6 +136,7 @@
             </div>
             <div id="dream-motif">
                 <div class="content-header">dream sentiment</div>
+                {{#unless sentiment.error}}
                 <div class="sub-block">
                     <img class="pie-chart" src="data:image/png;base64,{{sentiment.scatter}}">
                     <img class="pie-chart" src="data:image/png;base64,{{sentiment.polarity}}">
@@ -123,6 +146,12 @@
                         <span class="suggestion-text">{{suggest.motifs.text}}</span>
                     </div>
                 </div>
+                {{/unless}}
+                {{#if sentiment.error}}
+                    <ul class="phrase-block">
+                        <li class="phrase comma">{{sentiment.error}}</li>   
+                    </ul>
+                {{/if}}
             </div>
             <div class="button-container">
                 <a href='/' class="back">< Back to Home</a>

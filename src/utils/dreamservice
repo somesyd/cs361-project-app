@@ -4,6 +4,7 @@ const gsearch = require('./gsearch')
 const setting = require('./setting')
 const sentiment = require('./sentiment')
 const symbol = require('./symbol')
+const character = require('./character')
 
 const DREAM_SERVICE_URL ='https://cs361-parsely-rjg4g6kr7q-uw.a.run.app' // my service
 
@@ -33,6 +34,8 @@ async function getDreamData(text) {
             sentiment.getShadow(response.data.sentiment),
             symbol.getSymbols(response.data.symbols)
         ])
+
+        const dreamCharactersObj = character.getCharacters(response.data.ego, response.data.characters)
 
         // const settingObj = await setting.getSetting(response.data.settings, response.data.sub_settings)
         
@@ -73,16 +76,14 @@ async function getDreamData(text) {
         // for (let i = 0; i < shadowData.length; i++) {
         //     shadowList.push(shadowData[i][0])
         // }
+        
                
     
         // build the return object for the template context
         const dream = {
             setting: settingObj,
             symbols: symbolsObj,
-            characters: {
-                dreamego: response.data.ego,
-                figures: response.data.characters
-            },
+            characters: dreamCharactersObj,
             shadow: shadowObj,
             sentiment: sentimentObj
         }    

@@ -37,9 +37,13 @@ async function getShadow(sentiment) {
 
     if (sentiment !== undefined && sentiment !== null) {
         const shadowData = getShadowData(sentiment)
-        const shadowScatterPlotData = formatSentimentData(shadowData, graphs.shadow_graph)
-        shadow.meter = await sendGraphRequest(shadowScatterPlotData)
-        shadow.words = getShadowWords(shadowData)
+        if (!(shadowData.length === 0)) {
+            const shadowScatterPlotData = formatSentimentData(shadowData, graphs.shadow_graph)
+            shadow.meter = await sendGraphRequest(shadowScatterPlotData)
+            shadow.words = getShadowWords(shadowData)
+        } else {
+            shadow.error = 'No shadow elements were found'
+        }   
     } else {
         shadow.error = 'No shadow elements were found.'
     }
@@ -81,7 +85,6 @@ function formatSentimentData(data, graphObj, pol=1, subj=2) {
 
 function formatDocPieData(data, graphObjs) {
     let [pos, neg] = [0, 0]
-    console.log('data: ', data)
     let polarity = Math.round(data[0] * 100)
     if (polarity < 0) {
         pos = 200 - (Math.abs(polarity) + 100)
