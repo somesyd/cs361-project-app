@@ -8,26 +8,10 @@ const character = require('./character')
 
 const DREAM_SERVICE_URL ='https://cs361-parsely-rjg4g6kr7q-uw.a.run.app' // my service
 
-
-
-
 async function getDreamData(text) {
     try {
         const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
 
-        // // pick settings and number of images per request
-        // const longSettings = response.data.settings
-        // let settingList = pickSettings(response.data.sub_settings)
-        // let numImages = 2
-        // if (settingList.length === 2) {
-        //     numImages = 3
-        // } else if (settingList.length === 1) {
-        //     numImages = 6
-        // }
-
-        // // get the setting images from Alex's service
-        // const settingImages = await gsearch.getGoogleImages(settingList, numImages)
-        // console.log(settingImages)
         const [settingObj, sentimentObj, shadowObj, symbolsObj] = await Promise.all([
             setting.getSetting(response.data.settings, response.data.subsettings),
             sentiment.getSentimentAnalysis(response.data.sentiment, response.data.doc_sentiment),
@@ -35,49 +19,7 @@ async function getDreamData(text) {
             symbol.getSymbols(response.data.symbols)
         ])
 
-        const dreamCharactersObj = character.getCharacters(response.data.ego, response.data.characters)
-
-        // const settingObj = await setting.getSetting(response.data.settings, response.data.sub_settings)
-        
-        // const sentimentObj = await sentiment.getSentimentAnalysis(response.data.sentiment)
-
-        // const shadowObj = await sentiment.getShadow(response.data.sentiment)
-
-        // const symbolsObj = await symbol.getSymbols(response.data.symbols)
-       
-        // if (response.data.sentiment){
-        //      // build the graphs/plots
-        //     const sentimentData = response.data.sentiment
-        //     const shadowData = getShadowData(response.data.sentiment)
-
-        //     // format graph data
-        //     const sentimentScatterPlot = formatSentimentData(sentimentData, graph_types.general_sentiment)
-        //     const shadowScatterPlot = formatSentimentData(shadowData, graph_types.shadow)
-        //     const docPiePlots = formatDocPieData(response.data.doc_sentiment, graph_types.doc_graphs)
-            
-        //     // send the data to Spencer's service
-        //     const sentimentGraphFile = await getGraph(sentimentScatterPlot)
-        //     const shadowGraphFile = await getGraph(shadowScatterPlot)
-        //     const docPolarityPieFile = await getGraph(docPiePlots.doc_polarity)
-        //     const docEmotionPieFile = await getGraph(docPiePlots.doc_emotion)
-        // }
-       
-        
-        // go get references for symbols
-        // let symbolList = shuffleSymbols(response.data.symbols)
-        // symbolList = symbolList.filter(s => s != 'dream')
-
-        // // call David's service
-        // const symbolsResponse = await getWikipediaData(symbolList)
-        // const symbols = createSymbolObjs(symbolsResponse)
-
-        // get shadow words
-        // var shadowList = []
-        // for (let i = 0; i < shadowData.length; i++) {
-        //     shadowList.push(shadowData[i][0])
-        // }
-        
-               
+        const dreamCharactersObj = character.getCharacters(response.data.ego, response.data.characters)   
     
         // build the return object for the template context
         const dream = {

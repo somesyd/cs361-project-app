@@ -116,7 +116,6 @@
    
 }
 
-
 .button:hover,
 .button:focus {
     opacity: 0.6;
@@ -180,6 +179,14 @@
     padding: 10px;
     margin: 1em 1em 1em 3em;
     border: 1px solid lightblue;
+}
+
+.reference {
+    font-family: 'Helvetica-Neue', 'Helvetica', sans-serif;
+    color: #707070;
+    padding-top: 5px;
+    font-style: italic;
+    text-align: end;
 }
 
 .content-subheader {
@@ -322,7 +329,7 @@
 .button-container {
    display: grid;
    grid-template-columns: 1fr 1fr 1fr;
-   justify-items: start;
+   justify-items: center;
 }
 
 /* modal styling */
@@ -406,7 +413,7 @@
     background-color: white;
     position: absolute;
     width: 200px;
-    height: 200px;
+    height: 250px;
     top: 30%;
     left: 50%;
     transform:translate(-50%, -50%);

@@ -1,46 +1,65 @@
-const dreamText = {
-    dream: "I am in a room, a kitchen….I hear someone talking with Rachel from the television show \“Friends\”….Someone is trying to get her to do something….She is confused, does not want to do it, cannot help….It seems unfair to her, and I start crying in deep sadness….I put my hands over my eyes, and rest my head on the wood island in the middle of the kitchen, and I cry hard for her….Earlier, I am trying to find clothes for a group of people….I do find some, with a cool symbol on the left shoulder….the symbol provides a special pass or benefit to those who wear it….Hmm, I am surprised and pleased, that turned out better than I expected…."
-}
-const characters = {
-    dreamego: [
-        "I am in a room, a kitchen",
-        "I hear someone talking with Rachel",
-        "I start crying in deep sadness",
-        "I put my hands over my eyes",
-        "I cry hard for her", 
-        "I am trying to find clothes for a group of people",
-        "I do find some",
-        "I am surprised and pleased"
-        ],
-    agency: 'agencymeter.svg',
-    anim: ["Rachel from the television show \“Friends\”", "another character", "and another" ],
-    figures: ["group of people", "person example", "another example"]
-}
-
-const shadow = {
-    words: [
-        "She is confused",
-        "does not want to do it",
-        "seems unfair to her"
-    ],
-    meter: 'shadowmeter.svg'
-}
-
-const motifs = {
-    graph: 'motifs.svg'
-}
-
-const setting = {
-    text: [["in a room", "a kitchen", "the television show \"Friends\"", "middle of the kitchen"]],
-    photos: [
-        'dream-img-1.jpeg', 
-        'dream-img-2.jpeg', 
-        'dream-img-3.jpeg', 
-        'dream-img-4.jpg', 
-        'dream-img-5.jpg', 
-        'dream-img-6.jpeg'
+const sample_dreams = {
+    list: [
+        {
+            ref: "This Jungian Life Podcast, episode 188",
+            text: "It’s a bright clear day, and I’m in a forest. I’m walking around when I spot these hybrid creatures, both boar and human, or humans wearing boar heads as helmets. They are absolutely terrifying, and I try to hide from them in the brush. I watch them. Suddenly, one veers off from the rest and leans over and defecates or vomits from its chest. It’s violent and disgusting. The creature seems weakened, sick. Then I’m walking again, trying to get away from the creatures, but they spot me– at least one of them does. I am not afraid now and assume we will fight. There’s a group of swords on the ground–more like big serrated knives–, and I pick one up. The creature and I duel, and I cut it several times. I’m confident in my victory, but then I’m nicked on the face. I’m worried about this; maybe it’s worse than I know. Then the dream jumps, and I’m in a dark bathroom examining the cut in the mirror. It’s a scratch. The boar creature is here with me, but she’s a beautiful brunette woman, and it’s clear we’re lovers. The feeling now is very light and romantic and easy."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 186",
+            text: "My family has rented a house in an affluent area of my city for a celebration. I borrow my dad’s keys afterward to get something out of the car before planning to return quickly to the house. I’m wearing a yarmulke for the occasion. On my way back, I step onto a concrete block overlooking an SUV with an alarm going off. Despite there being a man in the car, a plainclothes policeman approaches me to say I’m being taken in for questioning because the car was stolen. The police officer refuses to let me call my father to tell him what happened. I am questioned by two officers, now in their uniforms, at the back of a luxurious synagogue. I am outraged and trying to profess my innocence with confidence, but my body and voice are shaking. The other officer lets me call my dad, who speaks in a gentle voice with sadness and almost disappointment. Then I am brought to a university-type study room to be questioned by a group of teen police officers, some of whom I recognize as people I went to high school with. On the way to this room, I see a friend and explain what is happening, but she seems apathetic and keeps walking. In the room, the teen police group is being irreverent and making jokes and creating distractions, looking at their phones, playing games, not listening to my expressions of anger and fear. At the end of the dream, Amy Winehouse appears in the room, and we all sing her song “Love is Blind.” I strain my voice to sing loudly and distinctly."
+        },
+        {
+           ref: "This Jungian Life Podcast, episode 161",
+           text: "There are tarantulas stuck on my skin the way ticks would be. They are big and hairy. Strangely the tarantulas are hidden in small boxes, which hang on my body. So their legs are digging into my skin, but I can’t see them unless I remove the boxes. My mother is helping me to remove the spiders, but they keep coming back. They don’t crawl upon me but rather seem to be born from my skin. All of a sudden, my mother is gone, and I’m alone with some spiders still hanging on me. I can’t remove them myself because I’m too scared to touch them. I am terrified and helpless." 
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 156",
+            text: "I am in a conservatory. It is night and the conservatory is dimly lit. It is a large room between two castle towers, and the stone walls of the castle can be seen at each end of the conservatory. I feel very comfortable in the room and I even begin to consider how I could move in with my belongings. An old friend from my music college years appears and tells me that the stone walls outside are covered with crystals and diamonds. He also says; “the diamonds are strong enough to cut the scales of a dragon.” We then spend some time making incisions in wood with these diamonds, though it feels like a childish exercise. I tell my friend that there is a hidden room in one of the towers and I invite him to follow me to this room. As we walk I mention other rooms (an organ room, a library) and we ascend staircases along the way. The corridors and staircases become more narrow and awkward. I enter the secret room alone; it is empty and very small. I feel extremely uncomfortable, as though there is a strong invisible presence there, and I feel terrified. I leave the room and rejoin my friend; the building is different and we join a crowd of people exiting a theatre. I wake from the dream."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 149",
+            text: "I found a tiny fish in the sink. It was really beat up but alive, so I got a bowl of water for it and put it there, but it immediately started outgrowing the bowl. I got a bigger bowl but as soon as I put it there, the fish got bigger. I got a tub of water and put it there and it got even bigger. It had stripes and it was looking at me and interacting with me the whole time. This fish seemed to have a soul.”"
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 144",
+            text: "I was playing a concert with a famous elder statesman of bluegrass. We play a funny song about a cat that travels with its owner in a semi-tractor trailer, across the USA.  The song begins with me playing the bass and with the cat making some kind of meow. My cat (all grey, yellow eyes, born without a tail) was lying next to me on stage, curled up on top of a stool. The cat’s presence gave me comfort, humor, and warmth. At end of song, the lights went dark. A spotlight forms above the elder statesman, casting shadows across his features. He turns to me and gets very close to my face. I feel pressure at being the focus of attention. He produces a large stack of cards below his chin and starts showing them to me, one by one. At first, the cards and numbers don’t make sense. He draws 10 then 13 – maybe he can’t guess the numbers my mind is picking. All of a sudden the “trick” begins to work. He picks 24, 48, and 72. He is drawing the cards I’m thinking of and from a very large stack. These numbers are bigger than a deck of playing cards, yet they are similarly designed, quite intricate. I’m shocked, not afraid, that he knows the numbers. The elder smirks a slight, knowing smile."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 141",
+            text: "I’m in a small underground room. Near the ceiling, in a shadowy corner, hangs a cocoon or nest. It looks like a felted mitten and contains sleeping baby bats. Frightened, I summon my husband and quietly point out the nest. He agrees that we should take care not to wake the baby bats—for even though they are tiny and blind, they are not vulnerable. I whisper the phrase “dangerous little experts.” We stand as still as we can in the dark. The next scene is outdoors and sunny. I’m in the middle of a street that is normally busy, but now empty. A snowy owl appears before me on the pavement. I again summon my husband, and as we admire the owl, five more snowies arrive. They grow until they stand about four feet tall, then begin hopping and spinning and flapping, almost like they’re performing a ceremonial Native American dance. I suspect they are children wearing feather costumes, but no, they really are owls. My husband and I are thrilled and honored. The street seems alive with magic."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 138",
+            text: "I was on a hospital bed, due to a heart attack. Doctors were trying to send an electric wave to measure my heart damage–and I was terrified of the pain it may cause. Doctors told me that if it hurts I need surgery immediately. I was watching the screen, and it didn’t hurt at all. Doctors told me that my heart was really strong and that I can go home. I felt relieved. Then a nurse walked over to me and handed a piece of paper, a note from someone, and said I have to go see this other patient. The note was from Su, a high school female friend that betrayed me, a person that I don’t think about at all. The note said that I need to take care of her babies. I was so confused. I walked over to the room, found her sitting on the bed. She pointed the babies to me and asked for help. I didn’t talk to her. She has just given birth, and 3 little bundles were in a crib next to her. I lifted the bundles and they didn’t look like babies, they were marble white and looked weird. Almost looked like the Hindu god with the elephant trunk- god Ganesh I think. I dropped them on the floor. I wanted to check whether they are real. I filled them with milk and said they are alive. I was so confused. I woke up."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 133",
+            text: "I’m standing outside of a pool and my sons (6 and 10) are in the pool with my ex-husband. My mother is sitting near me. I realize I need to go to the bathroom and shout to my ex-husband to take care of our youngest son. As I turn my back at the pool I see a frogman, he has the body of a man and the head of a frog. He is sitting as a frog on the floor. I’m surprised and fascinated by it. His skin is dark blue with small light green and light blue freckles. His eyes are green. It is raining and he seems to be enjoying the water. I call my brother so he can see the creature; my brother appears as a little boy and the frogman sits at a table with my brother that asks him many questions about his origin. The frogman speaks to my brother while I go to the bathroom. When I return the frogman is sitting on a small stairway, like waiting for me. I see him and I ask him if I can touch his skin. He lets me touch his arm; it is shiny and beautiful like a night full of stars. I don’t remember if I kiss him or hug him. He asks me to go with him and I tell him that I have other things to do. I walk down a street and find a busy avenue with heavy traffic. I have to cross to the other side but it seems hard, like a complex coordination of moves and traffic lights. I see the frogman walking on the other side of the avenue. "
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 129",
+            text: "I was waiting for a young man to pick me up for our second date, but he was late. I was in a park and there was a fair, and I ran into some of my childhood friends who were quite surprised about my date. So they started harassing me with questions about who he was and, mostly, why he was late. I didn’t have his phone number, so I didn’t know. I had with me a backpack, laptop, kindle, handbag, another bag and my stuff kept falling on the ground, and I had to pick it up over and over. It was raining hard, hours had passed and I decided to walk through the fair. There I bought a unicorn-shaped mug, that immediately fell off my hands and became ash as it hit the ground. I was tired and cold and went sitting under a large tree. In the tall grass, emerged a group of people who were shooting at wild ducks."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 119",
+            text: "It is dusk and quickly becoming night. I am hidden from view, lying on my belly in a tunnel of some sort. I am looking out onto a clearing surrounded by trees. I see a small, fluffy, grey kitten–innocent, sweet. I want to climb out to hold the kitten and take care of it. Suddenly, a large, dark-brownish black bear lumbers in, crashing through the foliage; it doesn’t see me. I watch it, and am struck by how coarse the hair of his fur is and that the claws are ivory white but thick, strong and sharp. I stay hidden, watching. The bear moves away and as it does, turns into a wrinkled light grey elephant; it is small, but from my point of view it looks quietly significant as it treads by. I am still hidden from view and feel awestruck and numb watching all this. I look down; I appear to be lying on over-sized slate- green stepping stones–oblong, almost triangular. Then to my horror, the stones begin to slowly shift up and along the ground, undulating! I feel a mix of awe and fear when I realize that the stones are actually the scales of an enormous serpent/snake–and my reclining body is being carried along with it. "
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 114",
+            text: "I was in a forest next to a fortress wall. A little boy appeared with a cotton hood over his head that covered his face. The child was riding a white pony. I could see his blue eyes through slits in the hood. They looked sideways. I don’t know if the child saw me, but he felt I was there because he clung to me. I hugged him and the pony with great love and tenderness. The child needed my love and protection. At that moment, a man in green clothes and armor approached me. Without being aggressive, he told me that I had to leave the child who was the king’s son and had his own guard. The man kindly invited me to go with him. I was divided in my feelings. I felt great love for the child, but I also felt guilt that I was breaking some high rules I didn’t understand. I followed the man, who was now dressed in a long red robe and looked like a royal nobleman. I was walking about 10 meters after him. We went around the fortress and took the streets of the city. We walked for a long time. He entered a building, I followed him at a distance. When I entered the building, I heard his voice from below, he was walking down the stone stairs. He told me to pass him a big black hook on a chain. I obeyed unquestioningly and handed him the hook. At that moment, for the first time, I doubted the man and his intentions. Horrified, I realized that, guided by my guilt, I was following a torturer who made his prey prepare their own torments. I realized that I had to do something right away and I regretted that I had not felt the threat before, when I could easily escape, because moving away after him, we were often in different places – for example, he had already entered the entrance, and I was still walking down the street. All I had to do was rush back up the stairs before entering his dungeon. I woke up in horror."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 109",
+            text: "I am on or in the ocean. Not sure how I got there or where I am going — also strangely not in something. From my left a huge ship appears. In the “window” of the ship there is an elephant and a giraffe next to each other. They “smile” at me as they pass me as if to say goodbye and there the ship disappears on the horizon. Then I wake up. I am now left with the image of Noah’s Ark but can’t make sense of the symbolism."
+        },
+        {
+            ref: "This Jungian Life Podcast, episode 95",
+            text: "I am going to become the next queen of England. But first, I had to clean a lot of food and trash from an audience seating area (like stands at a sports arena). I asked the Queen if I was making a mistake by becoming the next queen. She said yes, and that I will have no time to give to my own children (once I have them). A young male advisor to the Queen was assisting her and helping to set everything up for the transition. On a break from cleaning, I went down to a craft fair and visited some old ladies and talked to them about the beautiful art they made. My grandmother was there, trying to print a photograph I took of a Legislature building. I returned to my task and at 6:00 PM, I made my way to sit on the right arm of the Queen’s chair, ready for the ceremony. "
+        }
     ]
 }
+
+
 
 
 const suggest = {
@@ -62,41 +81,7 @@ const suggest = {
     }
 }
 
-const symbols = {
-    list: [
-        {   id: 1,
-            name: "television show",
-            image: 'television-show.jpeg',
-            text: "A television show – or simply TV show – is any content produced for viewing on a television set which can be broadcast via over-the-air, satellite, or cable, excluding breaking news, advertisements, or trailers that are typically placed between shows. Television shows are most often scheduled for broadcast well ahead of time and appear on electronic guides or other TV listings, but streaming services often make them available for viewing anytime. The content in a television show can be produced with different methodologies such as taped variety shows emanating from a television studio stage, animation or a variety of film productions ranging from movies to series. Shows not produced on a television studio stage are usually contracted or licensed to be made by appropriate production companies."
-        },
-        {   id: 2,
-            name: "kitchen",
-            image: 'kitchen.jpeg',
-            text: "A kitchen is a room or part of a room used for cooking and food preparation in a dwelling or in a commercial establishment. A modern middle-class residential kitchen is typically equipped with a stove, a sink with hot and cold running water, a refrigerator, and worktops and kitchen cabinets arranged according to a modular design. Many households have a microwave oven, a dishwasher, and other electric appliances. The main functions of a kitchen are to store, prepare and cook food (and to complete related tasks such as dishwashing). The room or area may also be used for dining (or small meals such as breakfast), entertaining and laundry. The design and construction of kitchens is a huge market all over the world.\n\nCommercial kitchens are found in restaurants, cafeterias, hotels, hospitals, educational and workplace facilities, army barracks, and similar establishments. These kitchens are generally larger and equipped with bigger and more heavy-duty equipment than a residential kitchen. For example, a large restaurant may have a huge walk-in refrigerator and a large commercial dishwasher machine. In some instances, commercial kitchen equipment such as commercial sinks is used in household settings as it offers ease of use for food preparation and high durability.\n\nIn developed countries, commercial kitchens are generally subject to public health laws. They are inspected periodically by public-health officials, and forced to close if they do not meet hygienic requirements mandated by law."
-        },
-        {
-            id: 3,
-            name: "hands",
-            image: 'hands.jpeg',
-            text: "A hand is a prehensile, multi-fingered appendage located at the end of the forearm or forelimb of primates such as humans, chimpanzees, monkeys, and lemurs. A few other vertebrates such as the koala (which has two opposable thumbs on each hand and fingerprints extremely similar to human fingerprints) are often described as having hands instead of paws on their front limbs. The raccoon is usually described as having hands though opposable thumbs are lacking.\n\nSome evolutionary anatomists use the term hand to refer to the appendage of digits on the forelimb more generally — for example, in the context of whether the three digits of the bird hand involved the same homologous loss of two digits as in the dinosaur hand.\n\nThe human hand usually has five digits: four fingers plus one thumb;[3][4] these are often referred to collectively as five fingers, however, whereby the thumb is included as one of the fingers.[3][5][6] It has 27 bones, not including the sesamoid bone, the number of which varies among people,[7] 14 of which are the phalanges (proximal, intermediate and distal) of the fingers and thumb. The metacarpal bones connect the fingers and the carpal bones of the wrist. Each human hand has five metacarpals[8] and eight carpal bones.\n\nFingers contain some of the densest areas of nerve endings in the body, and are the richest source of tactile feedback. They also have the greatest positioning capability of the body; thus, the sense of touch is intimately associated with hands. Like other paired organs (eyes, feet, legs) each hand is dominantly controlled by the opposing brain hemisphere, so that handedness—the preferred hand choice for single-handed activities such as writing with a pencil, reflects individual brain functioning.\n\nAmong humans, the hands play an important function in body language and sign language. Likewise, the ten digits of two hands and the twelve phalanges of four fingers (touchable by the thumb) have given rise to number systems and calculation techniques."
-        },
-        {
-            id: 4,
-            name: "eye",
-            image: 'eye.jpeg',
-            text: "Eyes are organs of the visual system. They provide animals with vision, the ability to receive and process visual detail, as well as enabling several photo response functions that are independent of vision. Eyes detect light and convert it into electro-chemical impulses in neurons. In higher organisms, the eye is a complex optical system which collects light from the surrounding environment, regulates its intensity through a diaphragm, focuses it through an adjustable assembly of lenses to form an image, converts this image into a set of electrical signals, and transmits these signals to the brain through complex neural pathways that connect the eye via the optic nerve to the visual cortex and other areas of the brain. Eyes with resolving power have come in ten fundamentally different forms, and 96% of animal species possess a complex optical system.[1] Image-resolving eyes are present in molluscs, chordates and arthropods.[2]\n\nThe most simple eyes, pit eyes, are eye-spots which may be set into a pit to reduce the angles of light that enters and affects the eye-spot, to allow the organism to deduce the angle of incoming light.[1] From more complex eyes, retinal photosensitive ganglion cells send signals along the retinohypothalamic tract to the suprachiasmatic nuclei to effect circadian adjustment and to the pretectal area to control the pupillary light reflex."
-        }
-    ]
-}
-
-
-
 module.exports = {
-    dreamText: dreamText,
-    setting: setting,
-    characters: characters,
-    suggest: suggest,
-    symbols: symbols,
-    shadow: shadow,
-    motifs: motifs
+    sample_dreams,
+    suggest
 }

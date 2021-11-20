@@ -14,7 +14,11 @@
             {{>header}}
             <div id="dream-text">
                 <div class="content-header">the dream</div>
-                <div class="sub-block">{{dreamtext}}</div>
+                <div class="sub-block">{{dreamtext}}
+                    {{#if ref}}
+                    <div class="reference">-{{ref}}</div>
+                    {{/if}}
+                </div>
             </div>
             <div id="dream-setting">
                 <div class="content-header">the setting</div>
@@ -155,7 +159,6 @@
             </div>
             <div class="button-container">
                 <a href='/' class="back">< Back to Home</a>
-                {{!-- <button class="button" id="save-content">Save Analysis</button> --}}
                 <button class="button" id="new-analysis-button">Analyze a New Dream</button>
             </div>
             
@@ -163,10 +166,7 @@
            
              {{>footer}}
         </div>
-        
-       
 
-         {{!-- <script src="/js/app.js"></script> --}}
          <script src="/js/modal.js"></script>
     </body>
 

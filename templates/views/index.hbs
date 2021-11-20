@@ -22,7 +22,7 @@
 
                     </div>
                     <div class="choice-box-container">
-                        <div class="choice-box demo" id="demo-choice">
+                        <div class="choice-box demo" id="demo-choice" onclick="location.href='/demo'">
                             <div class="choice-header-box">
                                 <div class="choice-header"><h2>demo</h2></div>
                             </div>
@@ -43,10 +43,12 @@
             </div>
            {{>footer}}
         </div>
+        <div id='loader-box'>
+            <div id='loader-text'><h3>processing... </h3></div>
+            <div id="loader"></div>
+        </div>
         
         
-        
-
          <script src="/js/app.js"></script>
     </body>
 

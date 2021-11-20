@@ -41,7 +41,6 @@ function distributeElements(total, divider) {
 }
 
 
-
 function setImageNumberPerPhrase(phraseList, totalNum) {
     const list = []
     if (phraseList.length < totalNum) {

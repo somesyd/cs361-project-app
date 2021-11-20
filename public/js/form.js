@@ -11,10 +11,16 @@ dreamSubmit.onclick = () => {
     body.style.opacity = 0.5
 }
 
+window.addEventListener("pageshow", function () {
+    loader.style.display = 'none'
+    loaderText.style.display = 'none'
+    loaderBox.style.display = 'none'
+    body.style.opacity = 1
+  });
+
 document.addEventListener('DOMContentLoaded', function() {
     loader.style.display = 'none'
     loaderText.style.display = 'none'
     loaderBox.style.display = 'none'
     body.style.opacity = 1
-
 })
