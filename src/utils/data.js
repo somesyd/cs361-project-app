@@ -60,8 +60,6 @@ const sample_dreams = {
 }
 
 
-
-
 const suggest = {
     characters: {
         title: "Suggestions for how to interpret characters in a dream.",

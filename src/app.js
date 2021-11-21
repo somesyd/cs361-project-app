@@ -1,4 +1,4 @@
-const path = require('path')  // Core node module
+const path = require('path') 
 const express = require('express') 
 const dotenv = require('dotenv').config()
 const hbs = require('hbs')
@@ -6,15 +6,14 @@ const data = require('./utils/data')
 const dreamservice = require('./utils/dreamservice')
 const demo = require('./utils/demo')
 
-const app = express()   // express is a function, so we have to start it up
+const app = express() 
 const port = process.env.PORT || 40404 
 
 // define paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
-
-app.set('view engine', 'hbs')   // hbs --> npm handlebars module that integrates with express 
+app.set('view engine', 'hbs') 
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
@@ -70,7 +69,6 @@ app.post('/processing', (req, res) => {
 })
 
 
-// start the server listening
 app.listen(port, () => {
     console.log('Server is up on port ' + port + '.')
 })

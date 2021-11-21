@@ -1,5 +1,7 @@
 const axios = require('axios')
-const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com' // David Ju's service
+
+// David Ju's Wikipedia-scraper service
+const WIKI_SCRAPER_URL = 'https://wiki-scraper-331405.uc.r.appspot.com' 
 
 const MAX_SYMBOLS = 6
 
@@ -88,16 +90,15 @@ async function getWikipediaData(symbolList) {
             .then(axios.spread(function (...res) {
                 responseList.push(res)
                 count ++
-                // console.log(res[0].data)
-                // console.log(res[1].data)
                 return
             })).catch ((error) => {
                 console.log(error.response.status)
+                return
             })
     }   
     return responseList         
 }
 
 module.exports = {
-    getSymbols: getSymbols
+    getSymbols
 }

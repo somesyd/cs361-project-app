@@ -1,6 +1,4 @@
 const axios = require('axios')
-const url = require('url')
-const gsearch = require('./gsearch')
 const setting = require('./setting')
 const sentiment = require('./sentiment')
 const symbol = require('./symbol')
@@ -12,8 +10,9 @@ async function getDreamData(text) {
     try {
         const response = await axios.post(DREAM_SERVICE_URL + '/dream', { text: text })
 
+        // call functions to get all dream elements
         const [settingObj, sentimentObj, shadowObj, symbolsObj] = await Promise.all([
-            setting.getSetting(response.data.settings, response.data.subsettings),
+            setting.getSetting(response.data.settings, response.data.sub_settings),
             sentiment.getSentimentAnalysis(response.data.sentiment, response.data.doc_sentiment),
             sentiment.getShadow(response.data.sentiment),
             symbol.getSymbols(response.data.symbols)
@@ -37,19 +36,6 @@ async function getDreamData(text) {
 }
 
 
-
-
-
-
-
-
-/* -------   Symbol Content Helper Functions  -------- */
-// return a sublist of 6 random symbols
-
-
-
-
-
 module.exports = {
-    getDreamData: getDreamData
+    getDreamData
 }

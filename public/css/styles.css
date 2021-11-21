@@ -2,7 +2,6 @@
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     width: 100%;
     height: 100%;
-   
 }
 
 .main-content {
@@ -10,10 +9,8 @@
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: auto 1fr auto;
-
 }
 
-/* landing page */
 .page-header {
     font-family: 'Georgia', sans-serif;
     font-size: large;
@@ -50,7 +47,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    
 }
 
 .choice-box {
@@ -85,8 +81,6 @@
     overflow-wrap: normal;
 }
 
-/* enter dream in form */
-
 #dream-form {
     display: grid;
     grid-template-rows: 4fr 1fr;
@@ -113,7 +107,6 @@
     max-width: 200px;
     place-self: end;
     margin: 1em;
-   
 }
 
 .button:hover,
@@ -133,8 +126,6 @@
 .back:hover {
     color:darkblue;
 }
-
-/* dream analysis content */
 
 .content-header {
     font-family: 'Georgia', sans-serif;
@@ -156,7 +147,17 @@
     list-style: none;
     font-style: italic;
     font-size: large;
-    /* padding: 5px; */
+}
+
+.phrase-list-block {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    margin: 2em;
+    color: #707070;
+    list-style: none;
+    font-style: italic;
+    font-size: large;
 }
 
 .photo-block {
@@ -228,6 +229,8 @@
 .phrase {
     display: none;
 }
+
+
 
 .phrase.comma {
     display: inline-block; 
@@ -382,7 +385,6 @@
 
 /* tooltip */
 /* help from:  https://blog.logrocket.com/creating-beautiful-tooltips-with-only-css/*/
-
 .tooltip {
     position: relative;
     /* display: inline-block; */
@@ -421,6 +423,7 @@
     text-align: center;
    
 }
+
 /* loader css modified from: https://www.w3schools.com/howto/howto_css_loader.asp */
 #loader {
     display: none;

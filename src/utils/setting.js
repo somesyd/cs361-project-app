@@ -1,24 +1,22 @@
 const gsearch = require('./gsearch')
 
-const CALL_IMAGES = false
+const CALL_IMAGES = true
 const MAX_NUM_IMAGES= 6
 
 async function getSetting(longSettings, shortSettings) {
     var setting = {}
     if (longSettings !== undefined && longSettings !== null) {
-        setting.text = [longSettings] 
+        setting.text = longSettings
         if (shortSettings !== undefined && shortSettings !== null) {
             shortSettings = pickSettings(shortSettings)
             const imageDistribution = setImageNumberPerPhrase(shortSettings, MAX_NUM_IMAGES)
-
             // CALL_IMAGES can turn off Google Custom Search if close to limit
             if (CALL_IMAGES) {
                 const settingImages = await gsearch.getGoogleImages(imageDistribution)
                 setting.photos = settingImages
             } else {
                 setting.photos = null
-            }
-            
+            }        
         } else {
             setting.photos = null
         }   
@@ -40,7 +38,6 @@ function distributeElements(total, divider) {
     return distribution
 }
 
-
 function setImageNumberPerPhrase(phraseList, totalNum) {
     const list = []
     if (phraseList.length < totalNum) {
@@ -56,7 +53,6 @@ function setImageNumberPerPhrase(phraseList, totalNum) {
     }
     return list
 }
-
 
 function getDescriptivePhrases(list) {
     var descriptive = []

@@ -1,8 +1,5 @@
-
-
 var modal
 var analyzeAgainButton = document.getElementById('new-analysis-button')
-
 
 window.onclick = (event) => {
     if (event.target == modal) {
@@ -13,7 +10,6 @@ window.onclick = (event) => {
 analyzeAgainButton.onclick = () => {
     location.href='/form'
 }
-
 
 function displayModal(id) {
     modal = document.getElementById('symbol-modal-' + id)

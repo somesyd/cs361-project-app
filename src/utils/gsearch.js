@@ -16,7 +16,7 @@ function buildGoogleLinks(settingsList) {
             imgSize: 'large',
             fileType: 'jpeg',
             imgType: 'photo',
-            // rights: 'cc_publicdomain',
+            rights: 'cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived',
             num: settingsList[i].num,
             q: settingsList[i].string
         }
@@ -30,6 +30,7 @@ function buildGoogleLinks(settingsList) {
 
 function extractImagesFromResponses(responses) {
     var images = []
+
      // loop through each response
      responses.forEach((res) => {
         const response = res.data.items
@@ -39,7 +40,6 @@ function extractImagesFromResponses(responses) {
             images.push(item.link)
         })
     })
-   
     return images
 }
 
@@ -48,8 +48,7 @@ function extractImagesFromResponses(responses) {
 async function getGoogleImages(list, numImages) {
 
     const googleRequests = buildGoogleLinks(list, numImages)
-    
-    // REFERENCE: sending multiple requests with axios: https://www.storyblok.com/tp/how-to-send-multiple-requests-using-axios
+      
     const images = axios.all(googleRequests)
         .then(axios.spread((...responses) => {
             return extractImagesFromResponses(responses) 
@@ -63,5 +62,5 @@ async function getGoogleImages(list, numImages) {
 
 
 module.exports = {
-    getGoogleImages: getGoogleImages
+    getGoogleImages
 }

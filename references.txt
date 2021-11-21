@@ -8,3 +8,11 @@ https://stackoverflow.com/questions/441018/replacing-spaces-with-underscores-in-
 
 distributing elements more or less evenly:
 https://stackoverflow.com/questions/9776555/how-to-divide-number-into-integer-pieces-that-are-each-a-multiple-of-n
+
+running multiple Promises together:
+https://stackoverflow.com/questions/45285129/any-difference-between-await-promise-all-and-multiple-await
+https://stackoverflow.com/questions/28066429/promise-all-order-of-resolved-values
+
+using axios:
+https://www.npmjs.com/package/axios#query-string
+https://www.storyblok.com/tp/how-to-send-multiple-requests-using-axios

@@ -2,7 +2,6 @@
 
 <html>
 
-
     <head>
         <title>reverie</title>
         <link rel="stylesheet" href="/css/styles.css">
@@ -23,9 +22,9 @@
             <div id="dream-setting">
                 <div class="content-header">the setting</div>
                 {{#unless setting.error}}
-                <ul class="phrase-block">
+                <ul class="phrase-list-block">
                     {{#each setting.text}}
-                    <li class="phrase comma">{{this}}</li>
+                    <li class="phrase-list">"{{this}}"</li>
                     {{/each}}
                 </ul>
                 <div class="photo-block">
@@ -161,9 +160,6 @@
                 <a href='/' class="back">< Back to Home</a>
                 <button class="button" id="new-analysis-button">Analyze a New Dream</button>
             </div>
-            
-            
-           
              {{>footer}}
         </div>
 

@@ -1,7 +1,8 @@
 const axios = require('axios')
 const graphs = require('./graphs')
 
-const GRAPH_SERVICE_URL = 'https://analytics-app-361.herokuapp.com/graphs_ms' // Spencer Wagner's service
+// Spencer Wagner's graph service
+const GRAPH_SERVICE_URL = 'https://analytics-app-361.herokuapp.com/graphs_ms' 
 
 async function getSentimentAnalysis(sentiment, docSentiment) {
     var sentimentAnalysis = {}
@@ -21,6 +22,7 @@ async function getSentimentAnalysis(sentiment, docSentiment) {
         // get charts from Spencer's service
         const [sentimentGraphFile, docPolarityPieFile, docEmotionPieFile] = await sendRequests(graphRequests)
 
+        // add graphs to return object
         sentimentAnalysis.scatter = sentimentGraphFile
         sentimentAnalysis.polarity = docPolarityPieFile
         sentimentAnalysis.emotion = docEmotionPieFile
