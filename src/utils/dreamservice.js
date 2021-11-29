@@ -18,7 +18,7 @@ async function getDreamData(text) {
             symbol.getSymbols(response.data.symbols)
         ])
 
-        const dreamCharactersObj = character.getCharacters(response.data.ego, response.data.characters)   
+        const dreamCharactersObj = character.getCharacters(response.data.ego, response.data.characters, response.data.animals)   
     
         // build the return object for the template context
         const dream = {

@@ -38,6 +38,11 @@
                         <li class="phrase comma">{{setting.error}}</li>   
                     </ul>
                 {{/if}}
+                <div class="suggestions">
+                    <b class="suggestion-title">{{suggest.setting.title}}</b>
+                    <p></p>
+                    <span class="suggestion-text">{{suggest.setting.text}}</span>
+                </div>
             </div>
             <div id="dream-characters">
                 <div class="content-header">the characters</div>
@@ -71,8 +76,19 @@
                         </ul>
                     {{/if}}
                 </div>
+                {{#if characters.animals}}
+                <div class="sub-block">
+                    <div class="content-subheader">dream animals</div>
+                    <ul class="phrase-block">
+                        {{#each characters.animals}}
+                        <li class="phrase comma">{{this}}</li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
+                </div>
                 <div class="suggestions">
                     <b class="suggestion-title">{{suggest.characters.title}}</b>
+                    <p></p>
                     <span class="suggestion-text">{{suggest.characters.text}}</span>
                 </div>
             </div>
@@ -111,6 +127,7 @@
                     {{/if}}
                     <div class="suggestions">
                         <b class="suggestion-title">{{suggest.symbols.title}}</b>
+                        <p></p>
                     <span class="suggestion-text">{{suggest.symbols.text}}</span>
                     </div>
                 </div>
@@ -133,6 +150,7 @@
                 {{/if}}
                      <div class="suggestions">
                         <b class="suggestion-title">{{suggest.shadow.title}}</b>
+                        <p></p>
                     <span class="suggestion-text">{{suggest.shadow.text}}</span>
                 </div>
                 </div>
@@ -146,6 +164,7 @@
                     <img class="pie-chart" src="data:image/png;base64,{{sentiment.emotion}}">
                     <div class="suggestions">
                         <b class="suggestion-title">{{suggest.motifs.title}}</b>
+                        <p></p>
                         <span class="suggestion-text">{{suggest.motifs.text}}</span>
                     </div>
                 </div>

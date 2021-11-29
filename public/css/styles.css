@@ -421,14 +421,16 @@
     transform:translate(-50%, -50%);
     z-index: 1000;
     text-align: center;
-   
+    opacity: 75%
 }
 
 /* loader css modified from: https://www.w3schools.com/howto/howto_css_loader.asp */
 #loader {
     display: none;
-    border: 16px solid lightgrey;
+    border: 16px solid white;
     border-top: 16px solid rgb(72, 174, 214);
+    border-right: 16px solid rgb(72, 174, 214);
+    border-bottom: 16px solid rgb(72, 174, 214);
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -437,6 +439,7 @@
     left: 50%;
     transform:translate(-50%, -50%);
     margin: auto;
+    opacity: 1;
 }
 
 #loader-text {
@@ -444,6 +447,7 @@
     font-size: large;
     font-style: bold;
     margin-bottom: 20px;
+    opacity: 1;
 }
 
 @keyframes spin {
