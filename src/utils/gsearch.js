@@ -2,26 +2,27 @@ const axios = require('axios')
 const url = require('url')
 const GOOGLE_SEARCH_URL = 'https://www.googleapis.com/customsearch/v1'
 
-
-function buildGoogleLinks(settingsList) {
-    var GoogleRequests = []
-
-    for (let i = 0; i < settingsList.length; i++) {
-
-        paramsObj = {
-            key: process.env.GOOGLE_SEARCH_API_KEY,
+function buildGoogleLink(num, q) {
+    paramsObj = {
+        key: process.env.GOOGLE_SEARCH_API_KEY,
             cx: process.env.GOOGLE_SEARCH_ENGINE_ID,
             searchType: 'image',
             safe: 'active',
             imgSize: 'large',
             fileType: 'jpeg',
             imgType: 'photo',
-            rights: 'cc_publicdomain|cc_attribute|cc_sharealike|cc_noncommercial|cc_nonderived',
-            num: settingsList[i].num,
-            q: settingsList[i].string
-        }
-        
-        const request = axios.get(GOOGLE_SEARCH_URL, { params: paramsObj })
+            num: num,
+            q: q
+    }
+    return axios.get(GOOGLE_SEARCH_URL, { params: paramsObj })
+}
+
+function buildGoogleLinks(settingsList) {
+    var GoogleRequests = []
+
+    for (let i = 0; i < settingsList.length; i++) {
+
+        request = buildGoogleLink(settingsList[i].num, settingsList[i].string)
         GoogleRequests.push(request)
       
     }
@@ -34,7 +35,7 @@ function extractImagesFromResponses(responses) {
      // loop through each response
      responses.forEach((res) => {
         const response = res.data.items
-
+        console.log(response)
         // add image link for each item in response
         Object.values(response).forEach((item) => {
             images.push(item.link)
@@ -54,11 +55,12 @@ async function getGoogleImages(list, numImages) {
             return extractImagesFromResponses(responses) 
                
             })).catch((error) => {
-            console.log(error.responses.status)
+            console.log(error)
             return
         })  
     return images
 }
+
 
 
 module.exports = {

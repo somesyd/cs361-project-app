@@ -59,7 +59,7 @@ function getDescriptivePhrases(list) {
     // adds strings with whitespace to descriptive
     for (let i = 0; i < list.length; i++) {
         if (list[i].includes(' ')) {
-            descriptive.push(list[i]) // add to descriptive
+            descriptive.push(list[i])
         }
     }
     return descriptive

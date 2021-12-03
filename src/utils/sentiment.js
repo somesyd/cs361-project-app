@@ -70,7 +70,6 @@ function getShadowWords(shadowData) {
     return shadowList
 }
 
-// graphObj = { graph_type, colors, xaxis, yaxis, xlabel, ylabel, title }
 function formatSentimentData(data, graphObj, pol=1, subj=2) {
     table = []
     for (let i = 0; i < data.length; i++) {
